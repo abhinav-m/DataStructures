@@ -122,6 +122,81 @@ class DynamicArrayStack {
 }
 
 
+class Node
+{
+    Node next;
+    int data;
+    Node()
+    {
+        next = null;
+        data = 0;
+    }
+}
+
+
+ class LinkedListStack
+{
+    Node TOP;
+    int size;
+    LinkedListStack()
+    {
+        TOP = null;
+        size =0;
+    }
+
+    public boolean push(int x)
+    {
+
+        Node newNode = new Node();
+        newNode.data = x;
+        if(this.isEmpty())
+            newNode.next=null;
+        else
+            newNode.next=TOP;
+        TOP = newNode;
+        size++;
+        return true;
+    }
+
+    public boolean isEmpty()
+    {
+        return(size==0);
+    }
+
+    public boolean pop()
+    {
+        if(this.isEmpty()){
+            System.out.println("Underflow");
+            return false;
+        }
+        else
+        TOP = TOP.next;
+        size--;
+        return true;
+    }
+
+    public boolean display()
+    {
+        if(this.isEmpty()) {
+            System.out.println("Stack is empty");
+            return false;
+        }
+        Node curNode = TOP;
+        while(curNode!=null)
+        {
+            if(curNode == TOP)
+            System.out.println("["+curNode.data+"] <- TOP");
+            else
+            System.out.println("["+curNode.data+"]");
+            curNode = curNode.next;
+        }
+        return true;
+
+    }
+
+}
+
+
 
 public class Stacks {
 
@@ -129,6 +204,13 @@ public class Stacks {
     public static void main(String[] args) {
 	SimpleStack arrayStack = new SimpleStack();
     DynamicArrayStack dynArrayStack = new DynamicArrayStack();
+    LinkedListStack llStack = new LinkedListStack();
+        for(int i =1;i<=20;i++)
+            llStack.push(i);
+        llStack.display();
+        for(int i =1;i<=5;i++)
+            llStack.pop();
+        llStack.display();
         for(int i =1;i<=20;i++)
             dynArrayStack.push(i);
         dynArrayStack.display();
