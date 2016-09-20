@@ -1,4 +1,5 @@
-
+import java.util.Stack;
+/*TBD: Correct Queue implementation The queue implementation here is sort of arbitrary. A better implmentation is possible.*/
 class CircularArrayQueue
 {
     static final int maxSize = 20;
@@ -34,18 +35,44 @@ class CircularArrayQueue
         return (size==0);
     }
 
-    public boolean deQueue(){
+    public int deQueue(){
+        int elemDeleted;
         if(isEmpty())
         {
             System.out.println("\nUnderflow");
-            return false;
+            return -1;
         }
-        else if(front == maxSize-1)
-            front =0;
-        else
+        else if(front == maxSize-1) {
+            elemDeleted = elements[maxSize-1];
+            front = 0;
+
+        }
+        else {
+            elemDeleted = elements[front];
             ++front;
+        }
         size--;
-        return true;
+        if(size==0)
+        {
+            front =-1;
+            rear =-1;
+        }
+        return elemDeleted;
+
+
+    }
+
+    /*PROBLEM STATEMENT: Reverse a queue using only queue ADT
+    * Time complexity: O(n) , this gave me a headache as i realized
+    * i had made many mistakes in my Queue implementation.*/
+    public void revQueue()
+    {
+        Stack stack = new Stack();
+        while(!this.isEmpty())
+        stack.push(this.deQueue());
+        while(!stack.isEmpty())
+        this.enQueue((int)stack.pop());
+
 
     }
 
@@ -91,7 +118,10 @@ public class QueuesDS {
     for(int i =1;i<=20;i++)
     arrayQueue.enQueue(i);
     arrayQueue.display();
-    System.out.println("Dequeueing 5");
+    System.out.println("Reversing the queue\n");
+    arrayQueue.revQueue();
+    arrayQueue.display();
+    System.out.println("\nDequeueing 5");
     for(int i =1;i<=5;i++)
     arrayQueue.deQueue();
     arrayQueue.display();
