@@ -37,8 +37,9 @@ class CircularArrayQueue
         }
         if (this.isEmpty()) {
             front = rear;
-            size++;
+
         }
+        size++;
         return true;
     }
 
@@ -116,13 +117,81 @@ class CircularArrayQueue
         else
             System.out.print(elements[front]);
     }
+/*PROBLEM STATEMENT: Interleaving a queue.
+ * An interleaved queue means for a given queue of size n (where n%2 == 0) ie,
+  * even number of elements if Q is {1,2,3,4,5,6}, Interleafed q will be
+   * 1,4,2,5,3,6
+   * Time complexity is O(n) since we are scanning the queue of size n and splitting it into two equal
+   * queues, i found this approach more intuitive than the one in karumanchi.
+   * The second for loop operates only n/2 times therefore the time complexity here will be
+   * O(n) + O(n/2) = O(n)
+   * Dequeuing and queueing are O(1) operations.*/
+    public boolean interLeafQueue()
+    {
+        //According to definition only queue where even number of elements occur can be interleaved.
+        if(this.size%2!=0)
+        return false;
+        int originalSize = this.size;
+        CircularArrayQueue firstQueueHalf = new CircularArrayQueue();
+        CircularArrayQueue secondQueueHalf = new CircularArrayQueue();
+        for(int i =0;i<originalSize;i++) {
+            if (i < originalSize / 2)
+                firstQueueHalf.enQueue(this.deQueue());
+            else
+                secondQueueHalf.enQueue(this.deQueue());
+        }
+        for(int i=0;i<originalSize/2;i++)
+        {
+            this.enQueue(firstQueueHalf.deQueue());
+            this.enQueue(secondQueueHalf.deQueue());
+        }
+        return true;
+    }
+
+    /*PROBLEM STATEMENT: INTERLEAVING A QUEUE
+    Solution 2. This involves usage of stack, and can be considered as an alternative solution where
+    using other queues isn't allowed.The basic concept behind this method is to reverse the queues
+   first half and then store it in a stack.Thus we will get half of the original queue in the stack ,
+    and half in the queue itself. Dequeuing the queue and enqueueing the popped stack will give us the inter
+    leaved queue.
+     Time complexity: O(n) Space complexity: O(n) for stack space*/
+    public boolean interLeafQueueUsingStack()
+    {
+        //According to definition only queue where even number of elements occur can be interleaved.
+        if(this.size%2!=0)
+            return false;
+        Stack stack = new Stack();
+        //Store size as the size changes and we need this value
+        int originalSize = this.size;
+        //Reverse front half of the queue by pushing it to stack.
+        for(int i =0;i<originalSize/2;i++)
+         stack.push(this.deQueue());
+        //Queue the reversed first half of the queue back to the end of the queue
+         while(!stack.isEmpty())
+         this.enQueue((int)stack.pop());
+        //Rotate half of the queue so the reversed first half is in the first place.
+        for(int i =0;i<originalSize/2;i++)
+           this.enQueue(this.deQueue());
+        //Put the first half of the queue in stack again to reverse it, stack and queue are ready now to be
+        //used simultaneously to interleaf.
+        for(int i=0;i<originalSize/2;i++)
+        stack.push(this.deQueue());
+        //Pop from stack to get the first half in original sequence and dequeue the queue to get the interleaved
+        //part queue both in a single loop.
+        for(int i=0;i<originalSize/2;i++)
+        {
+            this.enQueue((int)stack.pop());
+            this.enQueue(this.deQueue());
+        }
+        return true;
+    }
 }
 //TBD
 class ListQueue
 {
     LinkedList queueList;
     int front,rear;
-    int size =;
+    int size;
     ListQueue()
     {
         queueList = new LinkedList();
@@ -135,6 +204,7 @@ class ListQueue
         if(queueList.isEmpty())
 
         queueList.addLast(x);
+        return false;
     }
 }
 
@@ -262,6 +332,13 @@ public class QueuesDS {
 
     public static void main(String[] args) {
 	CircularArrayQueue arrayQueue = new CircularArrayQueue();
+    for(int i =1;i<=20;i++)
+    arrayQueue.enQueue(i);
+    System.out.println("\nNormal queue");
+    arrayQueue.display();
+    arrayQueue.interLeafQueueUsingStack();
+    System.out.println("\nInterleafed queue");
+    arrayQueue.display();
     DynamicArrayQueue  dynArrayQueue = new DynamicArrayQueue(20);
     for(int i =1;i<=40;i++) {
     dynArrayQueue.enQueue(i);

@@ -1,6 +1,7 @@
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 class SimpleStack
 {
@@ -149,21 +150,66 @@ TIME COMPLEXITY:O(n/2) since we're traversing from both ends of the string.
         }
         return isPalindrome;
     }
-/*3)// TBD
-Convert the given expression from INFIX to POSTFIX*/
- */
+/*3) TBD
+Convert the given expression from INFIX to POSTFIX
+ TBD with priority*/
 
-    public  String infixToPostFix(String passedString)
-    {
-        char[] charArray = passedString.toCharArray();
+    public  String infixToPostFix(String passedString) {
+        char[] inFixString = passedString.toCharArray();
+        char[] postFixString = new char[passedString.length()];
+        Stack symbolStack = new Stack();
         char ch;
-        for(int i =0;i<charArray.length;i++)
-        {
-            ch = charArray[i];
-            if(isSymbol(ch))
-                pushToStack(ch)
-
+        int j =0;
+        for (int i = 0; i < inFixString.length; i++) {
+            ch = inFixString[i];
+            if (isSymbol(ch)) {
+                if (symbolStack.isEmpty())
+                    symbolStack.push(ch);
+                else if ((ch == '+' || ch == '-') && (symbolStack.peek() == '\\' || symbolStack.peek() == '*')) {
+                    while (!symbolStack.isEmpty()&&(symbolStack.peek() != '+' || symbolStack.peek() != '-')  )
+                        postFixString[j++] = (char) symbolStack.pop();
+                    symbolStack.push(ch);
+                }
+                else
+                symbolStack.push(ch);
+            } else
+                postFixString[j++] = inFixString[i];
+        }
+        while(!symbolStack.isEmpty())
+            postFixString[j++] = (char) symbolStack.pop();
+        return new String(postFixString);
     }
+
+
+    public boolean isSymbol(char ch)
+    {
+    if(ch=='('||ch==')'||ch=='+'||ch=='-'||ch=='*'||ch=='\\')
+        return true;
+    else
+        return false;
+    }
+
+    //TBD
+    public String postFixtoInfix(String postFixString)
+    {
+        Stack inFixStack = new Stack();
+        char[] postFixArray = postFixString.toCharArray();
+        StringBuilder infixString = new StringBuilder();
+        for(int i =0;i<postFixArray.length;i++)
+        {
+            if(postFixArray[i]>='a'&&postFixArray[i]<='z')
+                inFixStack.push(postFixArray[i]);
+            else if(isSymbol(postFixArray[i]))
+            {
+               String newString = (string) inFixStack.pop()+postFixArray[i]+(String)inFixStack.pop();
+               infixString.append(newString);
+              inFixStack.push(newString);
+
+            }
+        }
+        return infixString.toString();
+    }
+
 }
 
 
@@ -310,6 +356,8 @@ public class Stacks {
 	SimpleStack arrayStack = new SimpleStack();
     DynamicArrayStack dynArrayStack = new DynamicArrayStack();
     LinkedListStack llStack = new LinkedListStack();
+        System.out.println(arrayStack.infixToPostFix("a*b+c*d\\e-f"));
+        System.out.println(arrayStack.postFixtoInfix(arrayStack.infixToPostFix("a*b+c*d\\e-f")));
         for(int i =1;i<=20;i++)
             llStack.push(i);
         llStack.display();
