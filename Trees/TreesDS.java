@@ -1,3 +1,4 @@
+import java.util.Stack;
 
 class TreeNode
 {
@@ -35,29 +36,51 @@ class TreeNode
 
 }
 
-class BinaryTree
-{
+class BinaryTree {
     TreeNode root;
-    BinaryTree()
-    {
+
+    BinaryTree() {
         root = new TreeNode();
     }
 
-   public void printTree(TreeNode root)
-   {
-       if(root.leftNode==null&&root.rightNode==null)
-       {
-           System.out.println(root.data);
-             return;
-       }
+/*1) VISIT TREE IN POSTORDER -> Recursive*/
+//This is postorder traversal, visit left node, right then the root node.
+//Note if the root becomes null, the previous function call is reached for the right node
+//this is continued till all nodes are traversed in the tree
+//Time complexity: O(n) for traversing the tree, O(n) recursive stack space
+    public void printTreePostOrder(TreeNode root) {
+        if (root != null) {
+            printTreePostOrder(root.leftNode);
+            printTreePostOrder(root.rightNode);
+            System.out.println(root.data);
+        }
 
-       printTree(root.leftNode);
-       printTree(root.rightNode);
-     System.out.println(root.data);
-       return;
-   }
+    }
+/*2) VISIT TREE IN POSTORDER -> Iterative*/
+    public void printTreePostOrderIter(TreeNode root) {
+    Stack nodeStack = new Stack();
+    nodeStack.push(root);
+        while(!nodeStack.isEmpty())
+        {
+            while(root.leftNode!=null) {
+                root = root.leftNode;
+                nodeStack.push(root);
+            }
 
 
+            System.out.println(root.data);
+            nodeStack.pop();
+            root = (TreeNode)nodeStack.peek();
+           String
+        String[] copyOfString = new String[size];
+            while(root.rightNode!=null) {
+                root = root.rightNode;
+                nodeStack.push(root.rightNode);
+            }
+
+        }
+
+    }
 }
 
 public class TreesDS {
@@ -78,7 +101,7 @@ public class TreesDS {
     tree.root.rightNode.rightNode = new TreeNode();
     tree.root.rightNode.leftNode.data = 6;
     tree.root.rightNode.rightNode.data = 7;
-    tree.printTree(tree.root);
+    tree.printTreePostOrderIter(tree.root);
 
     }
 }
