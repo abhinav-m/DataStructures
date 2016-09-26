@@ -1,4 +1,4 @@
-import sun.java2d.pipe.SpanShapeRenderer;
+
 
 import java.util.Arrays;
 import java.util.Stack;
@@ -150,6 +150,31 @@ TIME COMPLEXITY:O(n/2) since we're traversing from both ends of the string.
         }
         return isPalindrome;
     }
+
+/*Check if string is palindrome using stack.
+Time complexity: O(n) to scan the array , Space complexity:O(n/2) to store half the string in stack.
+ */
+    public static boolean palindromeUsingStack(String passedString)
+    {
+        char[] charArray = passedString.toCharArray();
+        Stack stack  = new Stack();
+        boolean reachedX = false,isPalindrome=true;
+        for(int i =0;i<charArray.length;i++) {
+            if (charArray[i] == 'X' && !reachedX)
+                reachedX = true;
+            else
+                stack.push(charArray[i]);
+            if (reachedX)
+                if (charArray[i] != stack.pop()) {
+                    isPalindrome = false;
+                    break;
+                }
+
+        }
+      return isPalindrome;
+
+
+    }
 /*3) TBD
 Convert the given expression from INFIX to POSTFIX
  TBD with priority*/
@@ -189,26 +214,26 @@ Convert the given expression from INFIX to POSTFIX
         return false;
     }
 
-    //TBD
-    public String postFixtoInfix(String postFixString)
-    {
-        Stack inFixStack = new Stack();
-        char[] postFixArray = postFixString.toCharArray();
-        StringBuilder infixString = new StringBuilder();
-        for(int i =0;i<postFixArray.length;i++)
-        {
-            if(postFixArray[i]>='a'&&postFixArray[i]<='z')
-                inFixStack.push(postFixArray[i]);
-            else if(isSymbol(postFixArray[i]))
-            {
-               String newString = (string) inFixStack.pop()+postFixArray[i]+(String)inFixStack.pop();
-               infixString.append(newString);
-              inFixStack.push(newString);
-
-            }
-        }
-        return infixString.toString();
-    }
+//    //TBD
+//    public String postFixtoInfix(String postFixString)
+//    {
+//        Stack inFixStack = new Stack();
+//        char[] postFixArray = postFixString.toCharArray();
+//        StringBuilder infixString = new StringBuilder();
+//        for(int i =0;i<postFixArray.length;i++)
+//        {
+//            if(postFixArray[i]>='a'&&postFixArray[i]<='z')
+//                inFixStack.push(postFixArray[i]);
+//            else if(isSymbol(postFixArray[i]))
+//            {
+//               String newString = (String) inFixStack.pop()+postFixArray[i]+(String)inFixStack.pop();
+//               infixString.append(newString);
+//              inFixStack.push(newString);
+//
+//            }
+//        }
+//        return infixString.toString();
+//    }
 
 }
 
@@ -356,8 +381,9 @@ public class Stacks {
 	SimpleStack arrayStack = new SimpleStack();
     DynamicArrayStack dynArrayStack = new DynamicArrayStack();
     LinkedListStack llStack = new LinkedListStack();
+        System.out.println(SimpleStack.palindromeUsingStack("abaXaaba"));
         System.out.println(arrayStack.infixToPostFix("a*b+c*d\\e-f"));
-        System.out.println(arrayStack.postFixtoInfix(arrayStack.infixToPostFix("a*b+c*d\\e-f")));
+//        System.out.println(arrayStack.postFixtoInfix(arrayStack.infixToPostFix("a*b+c*d\\e-f")));
         for(int i =1;i<=20;i++)
             llStack.push(i);
         llStack.display();
