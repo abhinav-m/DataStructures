@@ -387,13 +387,13 @@ class BinaryTree {
     * if they are equal 1 will be returned Keep adding edges as you go upwards.
     * NOTE: This algorithm considers the element at first level at height 1, NOT ZERO.
     * This can be understood in a manner similar to finding the maximum element in the tree where
-    * we recursively traverse each node and compare to the previous node
+    * we recursively traverse left subtree and right subtree and compare max value in both
     * Similar to DFS as we are traversing the depth of the tree first (UNLIKE LEVEL ORDER where we
-    * traverse a complete level of BFS)
+    * traverse a complete level first)
     * Time complexity:O(n) Space complexityO(n) for recursive stack space.*/
     public int treeHeight(TreeNode node)
     {
-    if(node==null||(root.leftNode==null&&root.rightNode==null))
+    if(node==null)
         return 0;
     else {
         int left = treeHeight(node.leftNode);
@@ -404,6 +404,130 @@ class BinaryTree {
             return right+1;
     }
     }
+
+    /*PROBLEM STATEMENT 9)Print height of the given tree iteratively
+    This method works on level order traversal and putting a "mark" at the end of each level of the tree traversed
+    After a level is traversed we increment a counter to count the current level OR height of the tree traversed.
+    The root node is marked by a successive "NULL" node to mark the first level. When we are at the last level
+    the queue will be empty on the last node thus, giving us the height of the tree.
+    Time complexity:O(n) Space complexity:O(n) for queue.
+     */
+    public int treeHeightIter(TreeNode node)
+    {
+        int level =0;
+
+        if(node!=null){
+            LinkedList queueList = new LinkedList();
+
+            queueList.addLast(node);
+            //Marking the first level with a "NULL" node
+            queueList.addLast(null);
+
+            while(!queueList.isEmpty())
+            {
+                TreeNode curNode = (TreeNode) queueList.removeFirst();
+                if(curNode==null)
+                {
+                    //Traversed the first level. NOTE
+                    //All the nodes at the next level have been added.
+                    //We are starting the next level, increase counter
+                    level++;
+                    //If we are at the last level and we get a NULL,
+                    //our list has will become empty because it will be
+                    //the last node to be queued,hence we check if the queue
+                    //is empty or not.
+                    if(!queueList.isEmpty())
+                        queueList.addLast(null);
+
+                }
+                else {
+                    if (curNode.leftNode != null)
+                        queueList.addLast(curNode.leftNode);
+
+                    if (curNode.rightNode != null)
+                        queueList.addLast(curNode.rightNode);
+                 }
+
+
+            }
+
+        }
+        return level;
+    }
+    /* PROBLEM STATEMENT 10)Find deepest node in tree.
+    Simple enough. Just return the last node in level order traversal.
+     */
+    public TreeNode deepestNode(TreeNode node) {
+        TreeNode curNode = null;
+        if (node == null) {
+            System.out.println("\nTree is empty");
+            return curNode;
+        }
+
+        else {
+            LinkedList queueList = new LinkedList();
+            queueList.addLast(node);
+            while (!queueList.isEmpty()) {
+                 curNode = (TreeNode) queueList.removeFirst();
+                System.out.print(curNode.data);
+                if (curNode.leftNode != null)
+                    queueList.addLast(curNode.leftNode);
+                if (curNode.rightNode != null)
+                    queueList.addLast(curNode.rightNode);
+
+            }
+        }
+        return curNode;
+    }
+
+    public int numOfFullNodes(TreeNode node) {
+       int FullNodes= 0;
+        if (node == null) {
+            System.out.println("\nTree is empty");
+            return FullNodes;
+        }
+
+        else {
+            LinkedList queueList = new LinkedList();
+            queueList.addLast(node);
+            while (!queueList.isEmpty()) {
+              TreeNode  curNode = (TreeNode) queueList.removeFirst();
+                if(curNode.leftNode!=null&&curNode.rightNode!=null)
+                    FullNodes++;
+                if (curNode.leftNode != null)
+                    queueList.addLast(curNode.leftNode);
+                if (curNode.rightNode != null)
+                    queueList.addLast(curNode.rightNode);
+
+            }
+        }
+        return FullNodes;
+    }
+
+
+    public int numOfLeafNodes(TreeNode node) {
+        int leafNodes= 0;
+        if (node == null) {
+            System.out.println("\nTree is empty");
+            return leafNodes;
+        }
+
+        else {
+            LinkedList queueList = new LinkedList();
+            queueList.addLast(node);
+            while (!queueList.isEmpty()) {
+                TreeNode  curNode = (TreeNode) queueList.removeFirst();
+                if(curNode.leftNode==null&&curNode.rightNode==null)
+                    leafNodes++;
+                if (curNode.leftNode != null)
+                    queueList.addLast(curNode.leftNode);
+                if (curNode.rightNode != null)
+                    queueList.addLast(curNode.rightNode);
+
+            }
+        }
+        return leafNodes;
+    }
 }
 
 public class TreesDS {
@@ -412,6 +536,8 @@ public class TreesDS {
 	BinaryTree tree = new BinaryTree();
     for(int i = 1;i<=7;i++)
     tree.insertElement(i);
+    System.out.println("Leaf Nodes ="+tree.numOfLeafNodes(tree.root));
+    System.out.println("Full Nodes ="+tree.numOfFullNodes(tree.root));
     System.out.println("Height of tree ="+tree.treeHeight(tree.root));
     tree.levelOrderTraversal(tree.root);
     tree.printTreeReverseLevelOrder(tree.root);
