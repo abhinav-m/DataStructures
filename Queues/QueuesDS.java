@@ -185,6 +185,59 @@ class CircularArrayQueue
         }
         return true;
     }
+
+    /*PROBLEM STATEMENT: CHECKING IF SUCCESSIVE PAIR OF NUMBERS IN STACK ARE CONSECUTIVE OR NOT
+    The pairs can be increasing or decreasing, and if stack has odd number of elements, the top element is left out of
+    the pair.
+    An important property to note from stacks and queues is that since STACK IS A LIFO data structure and Queue is FIFO
+    Enqueuing a stack into a queue results in a reversed stack. This can be useful for solving many problems. Pushing a
+    stack into another stack also reverses the stack.
+    Time complexity: O(n) for stack and queue pushes (n) times which are all O(1) operations.
+    Space complexity:O(n) for Stack and Queue space.
+    Note: This method explicitly does a bit of recalculation. Maybe another method is possible, where we don't need to
+    assign queues again. Karumanchi's solution?
+     */
+    public static boolean isConsecutive(Stack stack)
+    {
+        CircularArrayQueue queue = new CircularArrayQueue();
+        int elements = 0;
+        boolean isConsec = true,isToprem =false;
+        int top=0;
+        //Push the elements of  stack into queue and count the number of elements
+        //This is to remove the top element if there are odd number of elements.
+        while(!stack.isEmpty()) {
+            queue.enQueue((int) stack.pop());
+            elements++;
+        }
+        //Save the top element if it is there
+        if(elements%2!=0) {
+            top = queue.deQueue();
+            isToprem = true;
+        }
+        //Push the elements in reverse order back into stack without top,
+        while(!queue.isEmpty())
+        stack.push(queue.deQueue());
+
+        //Repopulate the queue without the top element.
+        while(!stack.isEmpty())
+            queue.enQueue((int) stack.pop());
+
+
+        //Repopulate stack 2 elements at a time checking the consecutive condition.
+        while(!queue.isEmpty())
+        {
+            int firstElem = queue.deQueue();
+            int secondElem = queue.deQueue();
+            if(Math.abs(firstElem-secondElem)!=1)
+            isConsec = false;
+            stack.push(firstElem);
+            stack.push(secondElem);
+        }
+        //If we had removed the top element, push it back to it's original place.
+        if(isToprem)
+        stack.push(top);
+        return isConsec;
+    }
 }
 //TBD
 class ListQueue
@@ -332,6 +385,17 @@ public class QueuesDS {
 
     public static void main(String[] args) {
 	CircularArrayQueue arrayQueue = new CircularArrayQueue();
+    Stack testStack = new Stack();
+    testStack.push(4);
+    testStack.push(5);
+    testStack.push(-2);
+    testStack.push(-3);
+    testStack.push(11);
+    testStack.push(10);
+    testStack.push(5);
+    testStack.push(6);
+    testStack.push(20);
+    System.out.println("Each successive pair is consecutive?:"+CircularArrayQueue.isConsecutive(testStack));
     for(int i =1;i<=20;i++)
     arrayQueue.enQueue(i);
     System.out.println("\nNormal queue");
