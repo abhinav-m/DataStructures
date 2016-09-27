@@ -238,6 +238,30 @@ class CircularArrayQueue
         stack.push(top);
         return isConsec;
     }
+
+    /*PROBLEM STATEMENT: Reverse first 'k' elements in a given queue
+    * Push first 'k'elements into a stack, requeue them and shift the queue to make their positions correct.*/
+
+    public void reverseKElements (int k)
+    {
+        int totalSize = this.size,counter=1;
+        Stack kElements = new Stack();
+        int i =1;
+        while(i<=k)
+        {
+            kElements.push(this.deQueue());
+            i++;
+        }
+
+        while(counter<=totalSize) {
+            if (counter <= k)
+                this.enQueue((int) kElements.pop());
+            else
+                this.enQueue(this.deQueue());
+            counter++;
+        }
+
+    }
 }
 //TBD
 class ListQueue
@@ -398,6 +422,8 @@ public class QueuesDS {
     System.out.println("Each successive pair is consecutive?:"+CircularArrayQueue.isConsecutive(testStack));
     for(int i =1;i<=20;i++)
     arrayQueue.enQueue(i);
+    arrayQueue.reverseKElements(5);
+    arrayQueue.display();
     System.out.println("\nNormal queue");
     arrayQueue.display();
     arrayQueue.interLeafQueueUsingStack();
