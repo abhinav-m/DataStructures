@@ -456,6 +456,7 @@ class BinaryTree {
     }
     /* PROBLEM STATEMENT 10)Find deepest node in tree.
     Simple enough. Just return the last node in level order traversal.
+    Time complexity:O(n) Space complexity:O(n) for queue.
      */
     public TreeNode deepestNode(TreeNode node) {
         TreeNode curNode = null;
@@ -479,7 +480,9 @@ class BinaryTree {
         }
         return curNode;
     }
-
+/* PROBLEM STATEMENT 11) Find number of full nodes, half nodes , leaf nodes etc in the tree
+    Time complexity:O(n) Space complexity: O(n) for queue.
+ */
     public int numOfFullNodes(TreeNode node) {
        int FullNodes= 0;
         if (node == null) {
@@ -528,17 +531,124 @@ class BinaryTree {
         }
         return leafNodes;
     }
+
+    public int numOfHalfNodes(TreeNode node)
+    {
+        int halfNodes = 0;
+        if (node == null) {
+            System.out.println("\nTree is empty");
+            return halfNodes;
+        }
+        else
+        {
+            LinkedList  queueList = new LinkedList();
+            queueList.addLast(node);
+            while(!queueList.isEmpty())
+            {
+                TreeNode curNode = (TreeNode)queueList.removeFirst();
+                if((curNode.leftNode==null&&curNode.rightNode!=null)||(curNode.leftNode!=null&&curNode.rightNode==null))
+                    halfNodes++;
+                if(curNode.leftNode!=null)
+                    queueList.addLast(curNode.leftNode);
+                if(curNode.rightNode!=null)
+                    queueList.addLast(curNode.rightNode);
+            }
+        }
+        return halfNodes;
+    }
+/*PROBLEM STATEMENT:12) Check if the given two trees are structurally identical.
+Note this just checks whether the structure of the trees is the same, both the tree nodes traverse through the tree
+together and if anyone reaches a null node before the other, we are sure that the given tree is different in structure
+For the data check the problem is given below.
+Time complexity:O(n) for
+ */
+    public  static boolean areIdentical(TreeNode firstNode,TreeNode secondNode)
+    {
+        if(firstNode==null&&secondNode==null)
+            return true;
+        else if(firstNode==null || secondNode==null)
+            return false;
+        else
+        {
+          return ( areIdentical(firstNode.leftNode,secondNode.leftNode)&& areIdentical(firstNode.rightNode,secondNode.rightNode));
+        }
+    }
+
+/*PROBLEM STATEMENT:13) Check if the given two trees are structurally identical.
+Note this just checks whether the structure of the trees is the same, both the tree nodes traverse through the tree
+together and if anyone reaches a null node before the other, we are sure that the given tree is different in structure
+For the data check the problem is given below.
+ */
+    public  static boolean areIdenticalWithData(TreeNode firstNode,TreeNode secondNode)
+    {
+    if(firstNode==null&&secondNode==null)
+        return true;
+    else if(firstNode==null || secondNode==null)
+        return false;
+    else
+    {
+        boolean dataCheck = firstNode.data==secondNode.data;
+        return ( dataCheck&&areIdentical(firstNode.leftNode,secondNode.leftNode)&& areIdentical(firstNode.rightNode,secondNode.rightNode));
+    }
+    }
+/*PROBLEM STATEMENT: 14) Return the level of the tree with the maximum sum
+This problem is similar to finding the height of the tree iteratively where we seperate each level with a
+null node and increment the counter on reaching the next level, here in a similar manner we just keep adding the nodes
+at each level and compare the sum to previous levels, if its more we store the current level as max level.
+Time complexity:O(n) Space complexity:O(n) for queue.
+ */
+    public int levelWithMaxSum(TreeNode node)
+    {
+
+        if(node==null) {
+            System.out.println("Empty tree");
+            return 0;
+        }
+        LinkedList queue = new LinkedList();
+        queue.addLast(node);
+        queue.addLast(null);
+        int sum =0,max = Integer.MIN_VALUE,maxLevel=0,level=0;
+        while(!queue.isEmpty())
+        {
+            TreeNode curNode = (TreeNode)queue.removeFirst();
+            if(curNode!=null) {
+                sum += curNode.data;
+                if (curNode.leftNode != null)
+                    queue.addLast(curNode.leftNode);
+                if (curNode.rightNode != null)
+                    queue.addLast(curNode.rightNode);
+            }
+            else {
+                level++;
+                if (!queue.isEmpty())
+                    queue.addLast(null);
+                if (sum > max) {
+                    max = sum;
+                    maxLevel = level;
+                }
+                sum = 0;
+            }
+        }
+        return maxLevel;
+    }
+
 }
 
 public class TreesDS {
 
     public static void main(String[] args) {
 	BinaryTree tree = new BinaryTree();
+    BinaryTree copyTree = new BinaryTree();
+    for(int i = 7;i>=1;i--)
+        copyTree.insertElement(i);
     for(int i = 1;i<=7;i++)
     tree.insertElement(i);
+    System.out.println("Are identical?"+BinaryTree.areIdentical(tree.root,copyTree.root));
+    System.out.println("Are identical with data?"+BinaryTree.areIdenticalWithData(tree.root,copyTree.root));
     System.out.println("Leaf Nodes ="+tree.numOfLeafNodes(tree.root));
     System.out.println("Full Nodes ="+tree.numOfFullNodes(tree.root));
     System.out.println("Height of tree ="+tree.treeHeight(tree.root));
+    System.out.println("Max sum level="+tree.levelWithMaxSum(copyTree.root));
     tree.levelOrderTraversal(tree.root);
     tree.printTreeReverseLevelOrder(tree.root);
     System.out.println("Size of tree = "+ tree.sizeOfTreeIter(tree.root));
