@@ -738,15 +738,16 @@ Stack space:O(n) for recursive stack space Time complexity:O(n) for traversing n
         }
         return node;
     }
-/*PROBLEM STATEMENT: Check if the two given trees are mirrors
-Following the above approach we recursively traverse opposite nodes of each true, if they reach null nodes together along with data matching we return true,
-else we return false.
-Time complexity:O(n) Space complexity:O(n) for recursive stack space.
- */
+
+    /*PROBLEM STATEMENT: Check if the two given trees are mirrors
+    Following the above approach we recursively traverse opposite nodes of each true, if they reach null nodes together along with data matching we return true,
+    else we return false.
+    Time complexity:O(n) Space complexity:O(n) for recursive stack space.
+     */
     public static boolean isMirror(TreeNode firstTree, TreeNode secondTree) {
         if (firstTree == null && secondTree == null)
             return true;
-        //one of the nodes has reached null before the other therefore different.
+            //one of the nodes has reached null before the other therefore different.
         else if ((firstTree == null || secondTree == null))
             return false;
         else
@@ -760,20 +761,119 @@ elements have been found , we have found the least common ancestor.
 Time complexity:O(n) Space complexity:O(n) for recursive stack space.
  */
 
-public static TreeNode LCA (TreeNode node,TreeNode a,TreeNode b) {
-    if (node == a || node == b)
-        return node;
-    if (node != null) {
-        TreeNode leftNode = LCA(node.leftNode, a, b);
-        TreeNode rightNode = LCA(node.rightNode, a, b);
-        if (leftNode != null && rightNode != null)
+    public static TreeNode LCA(TreeNode node, TreeNode a, TreeNode b) {
+        if (node == a || node == b)
             return node;
-        else return (leftNode == null ? rightNode : leftNode);
+        if (node != null) {
+            TreeNode leftNode = LCA(node.leftNode, a, b);
+            TreeNode rightNode = LCA(node.rightNode, a, b);
+            if (leftNode != null && rightNode != null)
+                return node;
+            else return (leftNode == null ? rightNode : leftNode);
 
 
+        }
+        return node;
     }
-    return node;
-}
+
+    /* PROBLEM STATEMENT 19) Print all the ancestors of the given node in the tree
+    * Recursively  go down the depth of the tree(Postorder/preorde) if the element is found return true and print the
+    * ancestors recursively back up.
+    * Time complexity :O(n) Space complexity:O(n)*/
+    public boolean printAllAncestors(TreeNode node, TreeNode a) {
+        //If node is null, we return false"
+        if (node == null)
+            return false;
+        else if (node == a) {
+            System.out.println(node.data);
+            return true;
+        } else if (printAllAncestors(node.leftNode, a) || printAllAncestors(node.rightNode, a)) {
+            System.out.println(node.data);
+            return true;
+        }
+        return false;
+    }
+
+    /* PROBLEM STATEMENT 20) Traverse tree in zig-zag fashion
+    * This involves usage of 2 stacks as well as traversal of the two stacks.
+    * The idea behind the problem is simple, Push nodes onto one stack in  one order(as in level order traversal)
+    * While popping the nodes, push them into second stack in opposite order.Since stack reverses the data, it will
+    * automatically produce a spiral form of level order traversal.
+    * Space complexity:O(n) + O(n) for stacks ,Time complexity:O(n) for traversing elements.*/
+    public void zigZagTraversal(TreeNode node) {
+        if (node == null)
+            return;
+        Stack firstStack = new Stack();
+        Stack secondStack = new Stack();
+        firstStack.push(node);
+        while (!firstStack.isEmpty() || !secondStack.isEmpty())
+        {
+            while (!firstStack.isEmpty()) {
+                TreeNode curNode = (TreeNode) firstStack.pop();
+                System.out.println(curNode.data);
+                if (curNode.leftNode != null)
+                    secondStack.push(curNode.leftNode);
+                if (curNode.rightNode != null)
+                    secondStack.push(curNode.rightNode);
+            }
+            while (!secondStack.isEmpty()) {
+                TreeNode sNode = (TreeNode) secondStack.pop();
+                System.out.println(sNode.data);
+                if (sNode.rightNode != null)
+                    firstStack.push(sNode.rightNode);
+                if (sNode.leftNode != null)
+                    firstStack.push(sNode.leftNode);
+            }
+        }
+    }
+
+    /*PROBLEM STATEMENT 20) Karumanchi solution to the above problem
+    Karumanchi's solution is more or less the same. It keeps a stack at the "current level" which is the first node
+    when it starts, it alternatively pushes left and right nodes into the stack by maintaining a boolean variable after
+    each current level iteration(Each iteration involving popping off all current level). On each iteration the nextLevel
+    stack is populated in this manner and swapped with current level in the end.
+    NOTE: Interesting but funny point: Each level is actually reversed by pushing and popping into the stack the node
+    pushed first just determines the 'edge' node's child which would be pushed first (left first is a left right zig)
+    (right first is a right left zig) Mindless ranting. move on.
+   Time complexity:O(n) space:O(n)
+     */
+    public void zigZagTraversalKMCHI(TreeNode node)
+    {
+        if(node ==null)
+            return ;
+        boolean reverse = true;
+        Stack currentLevel = new Stack();
+        Stack nextLevel = new Stack();
+        currentLevel.push(node);
+        while(!currentLevel.isEmpty())
+        {
+            TreeNode curNode =(TreeNode) currentLevel.pop();
+            System.out.print(curNode.data+" ");
+            if(reverse)
+            {
+                if(curNode.leftNode!=null)
+                nextLevel.push(curNode.leftNode);
+                if(curNode.rightNode!=null)
+                nextLevel.push(curNode.rightNode);
+            }
+            else
+            {
+                if(curNode.rightNode!=null)
+                    nextLevel.push(curNode.rightNode);
+                if(curNode.leftNode!=null)
+                    nextLevel.push(curNode.leftNode);
+            }
+            if(currentLevel.isEmpty())
+            {
+                reverse =!reverse;
+                Stack tempStack = new Stack();
+                tempStack = currentLevel;
+                currentLevel = nextLevel;
+                nextLevel = tempStack;
+            }
+
+        }
+    }
 }
 
 public class TreesDS {
@@ -781,17 +881,21 @@ public class TreesDS {
     public static void main(String[] args) {
 	BinaryTree tree = new BinaryTree();
     BinaryTree copyTree = new BinaryTree();
-    for(int i = 1;i<=6;i++)
+    for(int i = 1;i<=15;i++)
     tree.insertElement(i);
     tree.mirrorOfTreeKMCHI(tree.root);
     System.out.println("\nTree mirror:");
     tree.levelOrderTraversal(tree.root);
     for(int i = 1;i<=6;i++)
     copyTree.insertElement(i);
+    System.out.println("zigging:");
+        tree.zigZagTraversalKMCHI(tree.root);
    System.out.println("Mirrors?:"+ BinaryTree.isMirror(tree.root,copyTree.root));
-    TreeNode tempNode = copyTree.root.leftNode;
-    TreeNode tempNode2 =copyTree.root.leftNode.leftNode;
-    System.out.println(BinaryTree.LCA(copyTree.root,tempNode,tempNode2).data);
+    TreeNode tempNode = copyTree.root.rightNode;
+    TreeNode tempNode2 =copyTree.root.rightNode.rightNode;
+    System.out.println("All ancestors of the node:");
+    copyTree.printAllAncestors(copyTree.root,tempNode2);
+  //  System.out.println(BinaryTree.LCA(copyTree.root,tempNode,tempNode2).data);
 
     System.out.println("Sum of elements in tree="+tree.sumOfElementsIterative());
     int arr[] = new int[tree.size(tree.root)];
