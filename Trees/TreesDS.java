@@ -268,7 +268,7 @@ class BinaryTree {
  * left or right we need to insert there. If we used preorder postorder or inorder techniques,
  * we would end up traversing to the end of the tree thus wasting intermediate elements space.*/
 
-    public boolean insertElement( int data) {
+    public boolean insertElement(int data) {
         LinkedList queueList = new LinkedList();
         if (root == null) {
             TreeNode newNode = new TreeNode();
@@ -296,7 +296,7 @@ class BinaryTree {
                 return true;
             }
         }
-     return false;
+        return false;
     }
 
 
@@ -307,10 +307,9 @@ class BinaryTree {
      the current size.
      Time complexity:O(n) Space complexity:O(n) for recursive stack space*/
 
-    int sizeOfTree(TreeNode node)
-    {
-        int size =1;
-        if(node==null)
+    int sizeOfTree(TreeNode node) {
+        int size = 1;
+        if (node == null)
             return 0;
         size += sizeOfTree(node.leftNode);
         size += sizeOfTree(node.rightNode);
@@ -323,21 +322,20 @@ class BinaryTree {
    here , the left subtree will be traversed first here as well till we encounter a leaf node which will return 0
    and traverse to the right node in a similar manner. Although the given function is same it does require a bit of thinking.*/
 
-    int size(TreeNode node)
-    {
+    int size(TreeNode node) {
 
-        if(node==null)
+        if (node == null)
             return 0;
-        else return(size(node.leftNode)+1+size(node.rightNode));
+        else return (size(node.leftNode) + 1 + size(node.rightNode));
     }
 
     /* PROBLEM STATEMENT 6)Find the size of the tree using level order traversal instead of recursion
      *  Time complexity:O(n) Space complexity:O(n) for Queue*/
     public int sizeOfTreeIter(TreeNode node) {
         //Using a linkedlist as queue here
-        int size =0;
-        if(node == null)
-        return size;
+        int size = 0;
+        if (node == null)
+            return size;
 
         LinkedList queueList = new LinkedList();
         queueList.addLast(node);
@@ -351,7 +349,7 @@ class BinaryTree {
                 queueList.addLast(curNode.rightNode);
 
         }
-    return size;
+        return size;
     }
 
     /*PROBLEM STATEMENT 7)Print a tree in reverse order (Assuming level order traversal)
@@ -375,11 +373,12 @@ class BinaryTree {
             }
             System.out.println("Reversed = ");
             while (!reversedTree.isEmpty()) {
-                TreeNode curNode = (TreeNode)reversedTree.pop();
-                System.out.println("\n" +curNode.data);
+                TreeNode curNode = (TreeNode) reversedTree.pop();
+                System.out.println("\n" + curNode.data);
             }
         }
     }
+
     /* PROBLEM STATEMENT 8)Print the height of the given tree
     * Recurse till the left node then,right node(whichever is at most depth will give 1 or more value)
     * if they are equal 1 will be returned Keep adding edges as you go upwards.
@@ -389,18 +388,17 @@ class BinaryTree {
     * Similar to DFS as we are traversing the depth of the tree first (UNLIKE LEVEL ORDER where we
     * traverse a complete level first)
     * Time complexity:O(n) Space complexityO(n) for recursive stack space.*/
-    public int treeHeight(TreeNode node)
-    {
-    if(node==null)
-        return 0;
-    else {
-        int left = treeHeight(node.leftNode);
-        int right = treeHeight(node.rightNode);
-        if (left > right)
-            return left+1;
-        else
-            return right+1;
-    }
+    public int treeHeight(TreeNode node) {
+        if (node == null)
+            return 0;
+        else {
+            int left = treeHeight(node.leftNode);
+            int right = treeHeight(node.rightNode);
+            if (left > right)
+                return left + 1;
+            else
+                return right + 1;
+        }
     }
 
     /*PROBLEM STATEMENT 9)Print height of the given tree iteratively
@@ -410,22 +408,19 @@ class BinaryTree {
     the queue will be empty on the last node thus, giving us the height of the tree.
     Time complexity:O(n) Space complexity:O(n) for queue.
      */
-    public int treeHeightIter(TreeNode node)
-    {
-        int level =0;
+    public int treeHeightIter(TreeNode node) {
+        int level = 0;
 
-        if(node!=null){
+        if (node != null) {
             LinkedList queueList = new LinkedList();
 
             queueList.addLast(node);
             //Marking the first level with a "NULL" node
             queueList.addLast(null);
 
-            while(!queueList.isEmpty())
-            {
+            while (!queueList.isEmpty()) {
                 TreeNode curNode = (TreeNode) queueList.removeFirst();
-                if(curNode==null)
-                {
+                if (curNode == null) {
                     //Traversed the first level. NOTE
                     //All the nodes at the next level have been added.
                     //We are starting the next level, increase counter
@@ -434,17 +429,16 @@ class BinaryTree {
                     //our list has will become empty because it will be
                     //the last node to be queued,hence we check if the queue
                     //is empty or not.
-                    if(!queueList.isEmpty())
+                    if (!queueList.isEmpty())
                         queueList.addLast(null);
 
-                }
-                else {
+                } else {
                     if (curNode.leftNode != null)
                         queueList.addLast(curNode.leftNode);
 
                     if (curNode.rightNode != null)
                         queueList.addLast(curNode.rightNode);
-                 }
+                }
 
 
             }
@@ -452,6 +446,7 @@ class BinaryTree {
         }
         return level;
     }
+
     /* PROBLEM STATEMENT 10)Find deepest node in tree.
     Simple enough. Just return the last node in level order traversal.
     Time complexity:O(n) Space complexity:O(n) for queue.
@@ -461,13 +456,11 @@ class BinaryTree {
         if (node == null) {
             System.out.println("\nTree is empty");
             return curNode;
-        }
-
-        else {
+        } else {
             LinkedList queueList = new LinkedList();
             queueList.addLast(node);
             while (!queueList.isEmpty()) {
-                 curNode = (TreeNode) queueList.removeFirst();
+                curNode = (TreeNode) queueList.removeFirst();
                 System.out.print(curNode.data);
                 if (curNode.leftNode != null)
                     queueList.addLast(curNode.leftNode);
@@ -478,22 +471,21 @@ class BinaryTree {
         }
         return curNode;
     }
-/* PROBLEM STATEMENT 11) Find number of full nodes, half nodes , leaf nodes etc in the tree
-    Time complexity:O(n) Space complexity: O(n) for queue.
- */
+
+    /* PROBLEM STATEMENT 11) Find number of full nodes, half nodes , leaf nodes etc in the tree
+        Time complexity:O(n) Space complexity: O(n) for queue.
+     */
     public int numOfFullNodes(TreeNode node) {
-       int FullNodes= 0;
+        int FullNodes = 0;
         if (node == null) {
             System.out.println("\nTree is empty");
             return FullNodes;
-        }
-
-        else {
+        } else {
             LinkedList queueList = new LinkedList();
             queueList.addLast(node);
             while (!queueList.isEmpty()) {
-              TreeNode  curNode = (TreeNode) queueList.removeFirst();
-                if(curNode.leftNode!=null&&curNode.rightNode!=null)
+                TreeNode curNode = (TreeNode) queueList.removeFirst();
+                if (curNode.leftNode != null && curNode.rightNode != null)
                     FullNodes++;
                 if (curNode.leftNode != null)
                     queueList.addLast(curNode.leftNode);
@@ -507,18 +499,16 @@ class BinaryTree {
 
 
     public int numOfLeafNodes(TreeNode node) {
-        int leafNodes= 0;
+        int leafNodes = 0;
         if (node == null) {
             System.out.println("\nTree is empty");
             return leafNodes;
-        }
-
-        else {
+        } else {
             LinkedList queueList = new LinkedList();
             queueList.addLast(node);
             while (!queueList.isEmpty()) {
-                TreeNode  curNode = (TreeNode) queueList.removeFirst();
-                if(curNode.leftNode==null&&curNode.rightNode==null)
+                TreeNode curNode = (TreeNode) queueList.removeFirst();
+                if (curNode.leftNode == null && curNode.rightNode == null)
                     leafNodes++;
                 if (curNode.leftNode != null)
                     queueList.addLast(curNode.leftNode);
@@ -530,93 +520,84 @@ class BinaryTree {
         return leafNodes;
     }
 
-    public int numOfHalfNodes(TreeNode node)
-    {
+    public int numOfHalfNodes(TreeNode node) {
         int halfNodes = 0;
         if (node == null) {
             System.out.println("\nTree is empty");
             return halfNodes;
-        }
-        else
-        {
-            LinkedList  queueList = new LinkedList();
+        } else {
+            LinkedList queueList = new LinkedList();
             queueList.addLast(node);
-            while(!queueList.isEmpty())
-            {
-                TreeNode curNode = (TreeNode)queueList.removeFirst();
-                if((curNode.leftNode==null&&curNode.rightNode!=null)||(curNode.leftNode!=null&&curNode.rightNode==null))
+            while (!queueList.isEmpty()) {
+                TreeNode curNode = (TreeNode) queueList.removeFirst();
+                if ((curNode.leftNode == null && curNode.rightNode != null) || (curNode.leftNode != null && curNode.rightNode == null))
                     halfNodes++;
-                if(curNode.leftNode!=null)
+                if (curNode.leftNode != null)
                     queueList.addLast(curNode.leftNode);
-                if(curNode.rightNode!=null)
+                if (curNode.rightNode != null)
                     queueList.addLast(curNode.rightNode);
             }
         }
         return halfNodes;
     }
-/*PROBLEM STATEMENT:12) Check if the given two trees are structurally identical.
-Note this just checks whether the structure of the trees is the same, both the tree nodes traverse through the tree
-together and if anyone reaches a null node before the other, we are sure that the given tree is different in structure
-For the data check the problem is given below.
-Time complexity:O(n) for
- */
-    public  static boolean areIdentical(TreeNode firstNode,TreeNode secondNode)
-    {
-        if(firstNode==null&&secondNode==null)
+
+    /*PROBLEM STATEMENT:12) Check if the given two trees are structurally identical.
+    Note this just checks whether the structure of the trees is the same, both the tree nodes traverse through the tree
+    together and if anyone reaches a null node before the other, we are sure that the given tree is different in structure
+    For the data check the problem is given below.
+    Time complexity:O(n) for
+     */
+    public static boolean areIdentical(TreeNode firstNode, TreeNode secondNode) {
+        if (firstNode == null && secondNode == null)
             return true;
-        else if(firstNode==null || secondNode==null)
+        else if (firstNode == null || secondNode == null)
             return false;
-        else
-        {
-          return ( areIdentical(firstNode.leftNode,secondNode.leftNode)&& areIdentical(firstNode.rightNode,secondNode.rightNode));
+        else {
+            return (areIdentical(firstNode.leftNode, secondNode.leftNode) && areIdentical(firstNode.rightNode, secondNode.rightNode));
         }
     }
 
-/*PROBLEM STATEMENT:13) Check if the given two trees are structurally identical.
-Note this just checks whether the structure of the trees is the same, both the tree nodes traverse through the tree
-together and if anyone reaches a null node before the other, we are sure that the given tree is different in structure
-For the data check the problem is given below.
- */
-    public  static boolean areIdenticalWithData(TreeNode firstNode,TreeNode secondNode)
-    {
-    if(firstNode==null&&secondNode==null)
-        return true;
-    else if(firstNode==null || secondNode==null)
-        return false;
-    else
-    {
-        boolean dataCheck = firstNode.data==secondNode.data;
-        return ( dataCheck&&areIdentical(firstNode.leftNode,secondNode.leftNode)&& areIdentical(firstNode.rightNode,secondNode.rightNode));
+    /*PROBLEM STATEMENT:13) Check if the given two trees are structurally identical.
+    Note this just checks whether the structure of the trees is the same, both the tree nodes traverse through the tree
+    together and if anyone reaches a null node before the other, we are sure that the given tree is different in structure
+    For the data check the problem is given below.
+     */
+    public static boolean areIdenticalWithData(TreeNode firstNode, TreeNode secondNode) {
+        if (firstNode == null && secondNode == null)
+            return true;
+        else if (firstNode == null || secondNode == null)
+            return false;
+        else {
+            boolean dataCheck = firstNode.data == secondNode.data;
+            return (dataCheck && areIdentical(firstNode.leftNode, secondNode.leftNode) && areIdentical(firstNode.rightNode, secondNode.rightNode));
+        }
     }
-    }
-/*PROBLEM STATEMENT: 14) Return the level of the tree with the maximum sum
-This problem is similar to finding the height of the tree iteratively where we seperate each level with a
-null node and increment the counter on reaching the next level, here in a similar manner we just keep adding the nodes
-at each level and compare the sum to previous levels, if its more we store the current level as max level.
-Time complexity:O(n) Space complexity:O(n) for queue.
- */
-    public int levelWithMaxSum(TreeNode node)
-    {
 
-        if(node==null) {
+    /*PROBLEM STATEMENT: 14) Return the level of the tree with the maximum sum
+    This problem is similar to finding the height of the tree iteratively where we seperate each level with a
+    null node and increment the counter on reaching the next level, here in a similar manner we just keep adding the nodes
+    at each level and compare the sum to previous levels, if its more we store the current level as max level.
+    Time complexity:O(n) Space complexity:O(n) for queue.
+     */
+    public int levelWithMaxSum(TreeNode node) {
+
+        if (node == null) {
             System.out.println("Empty tree");
             return 0;
         }
         LinkedList queue = new LinkedList();
         queue.addLast(node);
         queue.addLast(null);
-        int sum =0,max = Integer.MIN_VALUE,maxLevel=0,level=0;
-        while(!queue.isEmpty())
-        {
-            TreeNode curNode = (TreeNode)queue.removeFirst();
-            if(curNode!=null) {
+        int sum = 0, max = Integer.MIN_VALUE, maxLevel = 0, level = 0;
+        while (!queue.isEmpty()) {
+            TreeNode curNode = (TreeNode) queue.removeFirst();
+            if (curNode != null) {
                 sum += curNode.data;
                 if (curNode.leftNode != null)
                     queue.addLast(curNode.leftNode);
                 if (curNode.rightNode != null)
                     queue.addLast(curNode.rightNode);
-            }
-            else {
+            } else {
                 level++;
                 if (!queue.isEmpty())
                     queue.addLast(null);
@@ -641,26 +622,25 @@ Alot of things to consider here, first of all, every previous function call alre
  Time complexity:O(n) for traversing each node and Space complexity:O(n) for recursive stack space.*/
 
 
-    public void  pathsToLeafNode(TreeNode curNode,int arr[],int size)
-    {
-        if(curNode ==null)
+    public void pathsToLeafNode(TreeNode curNode, int arr[], int size) {
+        if (curNode == null)
             return;
         else {
-            arr[size]=curNode.data;
-            if(curNode.leftNode==null&&curNode.rightNode==null) {
+            arr[size] = curNode.data;
+            if (curNode.leftNode == null && curNode.rightNode == null) {
                 System.out.println("\nPath to leaf node:");
-                for(int i=0;i<=size;i++) {
+                for (int i = 0; i <= size; i++) {
                     System.out.print(arr[i]);
-                    if(i!=size)
-                    System.out.print("->");
+                    if (i != size)
+                        System.out.print("->");
                 }
                 return;
             }
             size++;
 
 
-            pathsToLeafNode(curNode.leftNode,arr,size);
-            pathsToLeafNode(curNode.rightNode,arr,size);
+            pathsToLeafNode(curNode.leftNode, arr, size);
+            pathsToLeafNode(curNode.rightNode, arr, size);
         }
     }
 /*PROBLEM STATEMENT: 15) Check if the given sum exists  in any path from root to node in the tree
@@ -669,15 +649,14 @@ be checked and the current node being traversed, however a solution which invole
 Time complexity: O(n) Space complexity:O(n) for recursive stack space.
  */
 
-    public boolean checkSumExists(TreeNode curNode,int curSum,int checkSum)
-    {
-        if(curNode==null)
+    public boolean checkSumExists(TreeNode curNode, int curSum, int checkSum) {
+        if (curNode == null)
             return false;
-        else{
-            curSum+= curNode.data;
-            if(curSum==checkSum)
-            return true;
-            return(checkSumExists(curNode.leftNode,curSum,checkSum)||checkSumExists(curNode.rightNode,curSum,checkSum));
+        else {
+            curSum += curNode.data;
+            if (curSum == checkSum)
+                return true;
+            return (checkSumExists(curNode.leftNode, curSum, checkSum) || checkSumExists(curNode.rightNode, curSum, checkSum));
         }
     }
 /*PROBLEM STATEMENT: 15) Check if the given sum exists  in any path from root to node in the tree
@@ -686,28 +665,28 @@ we simply check by subtracting each node's value from the current sum, if it eve
 Time complexity: O(n) Space complexity:O(n) for recursive stack space.
  */
 
-    public boolean checkSumExists(TreeNode curNode,int checkSum)
-    {
-        if(curNode==null)
-            return(checkSum==0);
-        else{
-            checkSum-= curNode.data;
-            if(checkSum==0)
+    public boolean checkSumExists(TreeNode curNode, int checkSum) {
+        if (curNode == null)
+            return (checkSum == 0);
+        else {
+            checkSum -= curNode.data;
+            if (checkSum == 0)
                 return true;
-            return(checkSumExists(curNode.leftNode,checkSum)||checkSumExists(curNode.rightNode,checkSum));
+            return (checkSumExists(curNode.leftNode, checkSum) || checkSumExists(curNode.rightNode, checkSum));
         }
     }
-/*PROBLEM STATEMENT: 16) Sum of all elements in the tree
-* Time complexity: O(n) To visit all nodes. Space complexity: O(n) for recursive stack space*/
-    public int sumOfElements(TreeNode curNode)
-    {
-        if(curNode==null)
+
+    /*PROBLEM STATEMENT: 16) Sum of all elements in the tree
+    * Time complexity: O(n) To visit all nodes. Space complexity: O(n) for recursive stack space*/
+    public int sumOfElements(TreeNode curNode) {
+        if (curNode == null)
             return 0;
         else
-            return(curNode.data+sumOfElements(curNode.leftNode)+sumOfElements(curNode.rightNode));
+            return (curNode.data + sumOfElements(curNode.leftNode) + sumOfElements(curNode.rightNode));
     }
-/*PROBLEM STATEMENT: 16) Sum of all elements in the tree (Iterative version) involves queue and level order traversal.
-* Time complexity: O(n) To visit all nodes. Space complexity: O(n) for queue space*/
+
+    /*PROBLEM STATEMENT: 16) Sum of all elements in the tree (Iterative version) involves queue and level order traversal.
+    * Time complexity: O(n) To visit all nodes. Space complexity: O(n) for queue space*/
     public int sumOfElementsIterative() {
         int sum = 0;
         TreeNode curNode = root;
@@ -725,7 +704,76 @@ Time complexity: O(n) Space complexity:O(n) for recursive stack space.
         }
         return sum;
     }
+/*PROBLEM STATEMENT: 17) Given a binary tree, find the mirror of the tree. Mirror is defined as interchanging the children of every element
+The solution to this problem is simple, traverse left sub tree and right subtree and swap nodes. Note node with one children will also
+be swapped (with null node)
+Stack space:O(n) for recursive stack space Time complexity:O(n) for traversing n nodes.
+ */
 
+    public TreeNode mirrorOfTree(TreeNode node) {
+        if (node != null) {
+            TreeNode leftNode = mirrorOfTree(node.leftNode);
+            TreeNode rightNode = mirrorOfTree(node.rightNode);
+            if (leftNode != null || rightNode != null) {
+                node.leftNode = rightNode;
+                node.rightNode = leftNode;
+
+            }
+        }
+        return node;
+    }
+
+    //This is the same as above , but uses less variables thus more memory efficient
+//However the above is more intuitive imo.
+    public TreeNode mirrorOfTreeKMCHI(TreeNode node) {
+        if (node != null) {
+            mirrorOfTree(node.leftNode);
+            mirrorOfTree(node.rightNode);
+            if (node.leftNode != null || node.rightNode != null) {
+                TreeNode temp = node.rightNode;
+                node.rightNode = node.leftNode;
+                node.leftNode = temp;
+
+            }
+        }
+        return node;
+    }
+/*PROBLEM STATEMENT: Check if the two given trees are mirrors
+Following the above approach we recursively traverse opposite nodes of each true, if they reach null nodes together along with data matching we return true,
+else we return false.
+Time complexity:O(n) Space complexity:O(n) for recursive stack space.
+ */
+    public static boolean isMirror(TreeNode firstTree, TreeNode secondTree) {
+        if (firstTree == null && secondTree == null)
+            return true;
+        //one of the nodes has reached null before the other therefore different.
+        else if ((firstTree == null || secondTree == null))
+            return false;
+        else
+            return ((firstTree.data == secondTree.data) && isMirror(firstTree.leftNode, secondTree.rightNode) && isMirror(firstTree.rightNode, secondTree.leftNode));
+    }
+/*PROBLEM STATEMENT 18) Find least common ancestor of two given nodes in the tree.
+The problem consideres that both the tree nodes are present in the tree, if not, it returns the one which is present.
+The problem is basically solved by traversing recursively into the left subtree and right subtree till we find one of the elements.
+if the element is found we store it in a node and return from that level in the stack. When we have returned to the level where both the
+elements have been found , we have found the least common ancestor.
+Time complexity:O(n) Space complexity:O(n) for recursive stack space.
+ */
+
+public static TreeNode LCA (TreeNode node,TreeNode a,TreeNode b) {
+    if (node == a || node == b)
+        return node;
+    if (node != null) {
+        TreeNode leftNode = LCA(node.leftNode, a, b);
+        TreeNode rightNode = LCA(node.rightNode, a, b);
+        if (leftNode != null && rightNode != null)
+            return node;
+        else return (leftNode == null ? rightNode : leftNode);
+
+
+    }
+    return node;
+}
 }
 
 public class TreesDS {
@@ -733,10 +781,18 @@ public class TreesDS {
     public static void main(String[] args) {
 	BinaryTree tree = new BinaryTree();
     BinaryTree copyTree = new BinaryTree();
-    for(int i = 7;i>=1;i--)
-        copyTree.insertElement(i);
-    for(int i = 1;i<=7;i++)
+    for(int i = 1;i<=6;i++)
     tree.insertElement(i);
+    tree.mirrorOfTreeKMCHI(tree.root);
+    System.out.println("\nTree mirror:");
+    tree.levelOrderTraversal(tree.root);
+    for(int i = 1;i<=6;i++)
+    copyTree.insertElement(i);
+   System.out.println("Mirrors?:"+ BinaryTree.isMirror(tree.root,copyTree.root));
+    TreeNode tempNode = copyTree.root.leftNode;
+    TreeNode tempNode2 =copyTree.root.leftNode.leftNode;
+    System.out.println(BinaryTree.LCA(copyTree.root,tempNode,tempNode2).data);
+
     System.out.println("Sum of elements in tree="+tree.sumOfElementsIterative());
     int arr[] = new int[tree.size(tree.root)];
     tree.pathsToLeafNode(tree.root,arr,0);
