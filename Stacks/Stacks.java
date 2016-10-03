@@ -235,6 +235,42 @@ Convert the given expression from INFIX to POSTFIX
 //        return infixString.toString();
 //    }
 
+
+    /*PROBLEM STATEMENT: Remove adjacent duplicates in a string
+    The solution given here uses a stack explicitly and removes the element
+    (if they are already in the stack as the string is parsed (in form of a char array)
+    a better solution exists, ie treating the string in the form of  a stack itself and
+    traversing through it.
+    Time complexity:O(n) Space complexity: O(N) for stack space.
+     */
+    public static String removeDuplicates(String passedString)
+    {
+        //The stack which we have implemented is a stack of integers.
+        //Using library
+        Stack stack = new Stack();
+        char[] array  = passedString.toCharArray();
+        stack.push(array[0]);
+        char mark = (char)stack.peek();
+        int i =1;
+        while(i< array.length)
+        {
+            if(array[i]==mark) {
+                while(array[i]==mark)
+                    i++;
+                stack.pop();
+            }
+            else {
+                stack.push(array[i]);
+                i++;
+            }
+            mark = (char)stack.peek();
+        }
+        StringBuilder string = new StringBuilder();
+        while(!stack.isEmpty())
+        string.append(stack.pop());
+        string.reverse();
+        return string.toString();
+    }
 }
 
 
@@ -381,6 +417,8 @@ public class Stacks {
 	SimpleStack arrayStack = new SimpleStack();
     DynamicArrayStack dynArrayStack = new DynamicArrayStack();
     LinkedListStack llStack = new LinkedListStack();
+    String test = "careermonk";
+        System.out.println("Duplicates removed ="+SimpleStack.removeDuplicates(test));
         System.out.println(SimpleStack.palindromeUsingStack("abaXaaba"));
         System.out.println(arrayStack.infixToPostFix("a*b+c*d\\e-f"));
 //        System.out.println(arrayStack.postFixtoInfix(arrayStack.infixToPostFix("a*b+c*d\\e-f")));
