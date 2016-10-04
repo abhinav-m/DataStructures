@@ -42,6 +42,14 @@ class SimpleStack
         }
     }
 
+    public int peek()
+    {
+        if(!isEmpty())
+        return this.array[TOP];
+        else
+        return -1;
+    }
+
   public boolean isEmpty()
     {
         return (numElements==0);
@@ -236,7 +244,7 @@ Convert the given expression from INFIX to POSTFIX
 //    }
 
 
-    /*PROBLEM STATEMENT: Remove adjacent duplicates in a string
+    /*PROBLEM STATEMENT4): Remove adjacent duplicates in a string
     The solution given here uses a stack explicitly and removes the element
     (if they are already in the stack as the string is parsed (in form of a char array)
     a better solution exists, ie treating the string in the form of  a stack itself and
@@ -270,6 +278,81 @@ Convert the given expression from INFIX to POSTFIX
         string.append(stack.pop());
         string.reverse();
         return string.toString();
+    }
+
+//Wrong implementation, above one is correct. TBD
+    public static String removeDuplicatesInPlace(String string) {
+        int stackPos = -1;
+        char[] stringArray = string.toCharArray();
+        int i =0;
+        int elemRemoved = 0;
+        while(i<stringArray.length)
+        {
+            if(stackPos==-1||stringArray[stackPos]!=stringArray[i])
+            {
+                stackPos++;
+                stringArray[stackPos] = stringArray[i];
+                i++;
+            }
+            else if(stringArray[i]==stringArray[stackPos])
+            {
+                while(stringArray[i]==stringArray[stackPos]) {
+                    i++;
+                    elemRemoved+=2;
+                }
+                stackPos--;
+            }
+        }
+        return String.copyValueOf(stringArray).substring(0,stringArray.length-elemRemoved);
+    }
+
+/*PROBLEM STATEMENT 5):Reverse a stack using push and pop operations.
+This one involes using two recursive functions one to simulate a stack being reversed,
+another to push the elements in the bottom of the stack.
+The main idea behind the solution is , recursively travel to the bottom of the original stack,
+while popping elements
+Push  element as you recurse back upwards to the BOTTOM of the stack and you will automatically get
+reversed stack.
+Time complexity:O(n^2) Space complexity:O(n) recursive stack space.
+ */
+
+    public void reverseStack(SimpleStack stack)
+    {
+        //If stack is empty , return from the current recursion level
+        if(stack.isEmpty())
+        return;
+        //Store data at the current recursion level
+        int data = stack.peek();
+        //Pop the stack
+        stack.pop();
+        //Recursive call to the stack
+       reverseStack(stack);
+        //Once the base case is reached stack will be empty
+        //insert the data at the bottom of the stack as
+        //we recurse back through the original stack.
+        //This will automatically reverse the stack.
+        insertBottom(stack,data);
+
+    }
+
+    public void insertBottom(SimpleStack stack,int data)
+    {
+        //Base case, push the new element here since we have to insert at the bottom of
+        //the stack
+        if(stack.isEmpty()) {
+            stack.push(data);
+           return;
+        }
+            else {
+            //Recursively pop the elements and store values
+            //till we reach the base case.
+            int temp = stack.peek();
+            stack.pop();
+            insertBottom(stack,data);
+            //Once base case is reached, push the elements going up through
+            //the recursive stack
+            stack.push(temp);
+        }
     }
 }
 
@@ -415,10 +498,17 @@ public class Stacks {
     //Stacks through array.
     public static void main(String[] args) {
 	SimpleStack arrayStack = new SimpleStack();
+    for(int i =1;i<=5;i++)
+    arrayStack.push(i);
+    System.out.println("Normal stack =");
+    arrayStack.display();
+     arrayStack.reverseStack(arrayStack);
+    System.out.println("Reversed stack =");
+    arrayStack.display();
     DynamicArrayStack dynArrayStack = new DynamicArrayStack();
     LinkedListStack llStack = new LinkedListStack();
-    String test = "careermonk";
-        System.out.println("Duplicates removed ="+SimpleStack.removeDuplicates(test));
+    String test = "caaabaab";
+        System.out.println("Duplicates removed ="+SimpleStack.removeDuplicatesInPlace(test));
         System.out.println(SimpleStack.palindromeUsingStack("abaXaaba"));
         System.out.println(arrayStack.infixToPostFix("a*b+c*d\\e-f"));
 //        System.out.println(arrayStack.postFixtoInfix(arrayStack.infixToPostFix("a*b+c*d\\e-f")));
