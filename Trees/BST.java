@@ -154,6 +154,24 @@ class BinarySearchTree {
         }
         return curNode;
     }
+
+    /*PROBLEM STATEMENT 1) Find LCA of two nodes in a given binary tree*/
+    public static Node LCA(Node curNode,int key1,int key2)
+    {
+       while(true)
+       {
+    if(curNode==null)
+      return null;
+    if(curNode.key<key1&&curNode.key>key2||curNode.key>key1&&curNode.key<key2)
+        return curNode;
+       if(curNode.key<key1&&curNode.key<key2)
+           curNode = curNode.rightNode;
+           else
+           curNode =curNode.leftNode;
+
+       }
+
+    }
 }
 
 
@@ -174,6 +192,7 @@ public class BST {
     bSTree2.insertElement(bSTree2.root,6);
     if(BinarySearchTree.findNodeIter(bSTree.root,13)!=null)
     System.out.println("Node found");
+    System.out.println("LCA ="+BinarySearchTree.LCA(bSTree2.root,5,10).key);
     bSTree2.deleteElement(bSTree2.root,10);
     System.out.println(BinarySearchTree.minElementIter(bSTree.root));
     System.out.println(BinarySearchTree.maxElementIter(bSTree.root));
