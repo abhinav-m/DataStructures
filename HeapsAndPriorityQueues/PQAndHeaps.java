@@ -8,9 +8,15 @@ and the last level should have nodes towards the left.
 ie, a priority based queue. These can be understood as Enqueue and delete operations of the queue. Difference
 is that the order in which elements are queued are not necessarily the order in which they are processed.
  */
+
+/*Enum type declaring two types of heap, max heap and min heap,
+where both can be initialised with the constructor.
+ */
 enum HEAP_TYPE{
     MAX_HEAP,MIN_HEAP;
 }
+
+/*Implementing heap with the help of array*/
 class BinaryHeap
 {
 public HEAP_TYPE heapType;
@@ -39,15 +45,18 @@ heap ,in an array whose index starts at 0. and every node is positioned accordin
         else
         return i-1/2;
     }
-
+/*Since heaps are stored from array index  0, left child will be at 2*i+1,right child will
+be at 2*i+2 if that is greater than the current number of elements in the heap(note this can be
+less than the capacity, the rest of the elements are empty)
+ */
     int leftChild(int i)
     {
-        return (2*i+1<capacity?2*i+1:-1);
+        return (2*i+1<size?2*i+1:-1);
     }
 
     int rightChild(int i)
     {
-        return (2*i+2<capacity?2*i+2:-1);
+        return (2*i+2<size?2*i+2:-1);
     }
 
 /* ALL the above operations are O(1) operations and are used internally by the heap.
@@ -64,7 +73,10 @@ and the element with max priority will be stored in the first location.
 /* This function takes an element at position i,
 and inserts it at it's correct position in the heap ASSUMING
 the element is in the incorrect position in the first place.
-Can be understood as a driver function for insertions in the heap.
+Can be understood as a driver function for removing elements from the
+heap, which copy the last element into the first position to delete it,
+reduce the size of the heap, and percolate down the first element to
+it's correct position.
  */
     void perlocateDown(int  i)
     {
@@ -85,7 +97,10 @@ Can be understood as a driver function for insertions in the heap.
         }
         perlocateDown(min);
     }
-
+/*Above is the driver function for deletion,
+the last element is copied to the first element of the heap and
+percolated down back to it's correct position.
+ */
     int delete()
     {
         int data;
@@ -98,7 +113,11 @@ Can be understood as a driver function for insertions in the heap.
         this.perlocateDown(0);
         return data;
     }
-
+/*Insertions involve percolating up ,
+similar to deletion function, element is inserted
+in the last position and compared with it's previous elements,
+and shifted upwards accordingly.
+ */
     void insert(int data)
     {
         if(size==capacity)
@@ -106,7 +125,7 @@ Can be understood as a driver function for insertions in the heap.
         int i =size;
         size++;
         array[i]=data;
-        while(i>=0&&data<array[parentOf(i)])
+        while(i>0&&data<array[parentOf(i)])
         {
             int temp = array[i];
             array[i] = array[parentOf(i)];
@@ -115,7 +134,9 @@ Can be understood as a driver function for insertions in the heap.
         }
 
     }
-
+/*Heap is implemented through dynamic array, thus if array size
+is insufficient we increase it by repeated doubling.
+ */
     public void resizeHeap()
     {
         int[] newArray = new int[this.capacity*2];
@@ -123,6 +144,13 @@ Can be understood as a driver function for insertions in the heap.
         newArray[i] =  array[i];
         this.array= newArray;
         capacity=capacity*2;
+    }
+
+    void destroyHeap()
+    {
+       this.array = null;
+        this.size =0;
+        this.capacity = 0;
     }
 }
 
