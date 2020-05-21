@@ -46,6 +46,24 @@ class Node:
         traversal_order.get(ORDER)(s);
 
 
+    @staticmethod
+    def level_order_traversal(root):
+        current_level = [root]
+       
+        while(len(current_level) > 0):
+            next_level = []
+            for i in range(0, len(current_level)):
+                current_node = current_level[i]
+                if(current_node):
+                    print(current_node.d)
+                    next_level.append(current_node.l)
+                    next_level.append(current_node.r)
+                
+            # Swap current and next level once current level has been traversed  
+            current_level  = next_level
+                    
+           
+
 
 
 root = Node(10,None,None)
