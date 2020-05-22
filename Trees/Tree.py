@@ -87,7 +87,26 @@ class Node:
 
         # Using a list as queue( correct if needed)
                     
-           
+    @staticmethod
+    def insert_tree_bfs(root,data):
+        new_node = Node(data)
+        if root is None:
+            root = new_node
+            return root
+          
+        q = Queue(maxsize=0)
+        q.put(root)
+        while(not q.empty()):
+            cur_node = q.get()
+            if(cur_node.l is None ):
+                cur_node.l = new_node
+                return root
+            elif(cur_node.r is None ):
+                cur_node.r = new_node
+                return root
+            # both exist add to queue
+            q.put(cur_node.l)
+            q.put(cur_node.r)
 
 
 

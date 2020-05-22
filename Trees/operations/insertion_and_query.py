@@ -5,13 +5,20 @@ from Tree import Node
 
 
 def create_tree():
-    tree_inst = Node(1)
-    tree_inst.l = Node(2)
-    tree_inst.r = Node(3)
-    tree_inst.l.l = Node(4)
-    tree_inst.l.r = Node(5)
-    tree_inst.r.l = Node(6)
-    tree_inst.r.r = Node(7)
+    tree_inst = None
+    tree_inst = Node.insert_tree_bfs(tree_inst,1)
+    tree_inst = Node.insert_tree_bfs(tree_inst,2)
+    tree_inst = Node.insert_tree_bfs(tree_inst,3)
+    tree_inst = Node.insert_tree_bfs(tree_inst,4)
+    tree_inst = Node.insert_tree_bfs(tree_inst,5)
+
+    # tree_inst = Node(1)
+    # tree_inst.l = Node(2)
+    # tree_inst.r = Node(3)
+    # tree_inst.l.l = Node(4)
+    # tree_inst.l.r = Node(5)
+    # tree_inst.r.l = Node(6)
+    # tree_inst.r.r = Node(7)
     return tree_inst
 
 
