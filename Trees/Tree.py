@@ -1,3 +1,5 @@
+from queue import Queue
+
 class Node:
     def __init__(self,d,l=None,r=None):
         self.d = d
@@ -61,6 +63,29 @@ class Node:
                 
             # Swap current and next level once current level has been traversed  
             current_level  = next_level
+    
+
+    ## Better than above, because doesn't need to swap two lists O(n) space of queue at max
+    ## at last level, O(n) traverses each node once.
+    @staticmethod
+    def breadth_first_traversal(root):
+        if root is None:
+            return
+        q = Queue(maxsize=0)
+        q.put(root)
+        while(not q.empty()):
+            # Get the current level element and put the next
+            # in queue
+            cur_node = q.get();
+            print(cur_node.d)
+            # Put the next nodes on queue 
+            if(cur_node.l):
+                q.put(cur_node.l)
+            if(cur_node.r):
+                q.put(cur_node.r)
+
+
+        # Using a list as queue( correct if needed)
                     
            
 
