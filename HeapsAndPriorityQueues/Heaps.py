@@ -35,3 +35,22 @@ class Heap:
             return -1
         else:
             return self.heap[0]
+
+    # Element index to perlocate or heapify down
+    def perlocate_down(self, idx):
+        l_idx = self.left_child(idx)
+        r_idx = self.right_child(idx)
+
+        max_idx = idx
+
+        if(l_idx != -1 and self.heap[l_idx]  > self.heap[max_idx]):
+            max_idx = l_idx
+        if(r_idx != -1 and self.heap[r_idx] > self.heap[max_idx]):
+            max_idx = r_idx
+        
+
+        # Swap elements at indexes and go down the tree if current and max_idx differ
+        if(max_idx != idx):
+            self.heap[idx] ,self.heap[max_idx] = self.heap[max_idx],self.heap[idx]
+
+        self.perlocate_down(max_idx)
