@@ -7,7 +7,6 @@ class Node:
 
   
     def insert_node(self,data):
-       
         if(self.d):    
             if(data < self.d):
                 if(self.l is None):
@@ -24,7 +23,64 @@ class Node:
         else:
              # Base case if tree is defined with None
                self.d = data
-           
+    
+    # Max will always be in right subtree for BST
+    def findMax(self):
+        if(self is None):
+            return -1
+        
+        # Traverse right subtree till Max is found
+        if(self.r):
+            self.r.findMax()
+        else:
+            return self.d
+
+    def findMin(self):
+        if(self is None):
+            return -1
+        
+        # Traverse left subtree till min is found
+        if(self.l):
+            self.l.findMin()
+        else:
+            return self.d
+
+    @staticmethod
+    def delete_node(root,data):
+        # Base case for empty tree.
+        if(root is None):
+            return None
+
+        # Update roots as you go back up
+        if(data < root.d):
+          
+            root.l = root.delete_node(root.l,data)
+        elif(data > root.d):
+            root.r =  root.delete_node(root.r,data)
+        else:
+            if(root.l is None):
+                temp = root.r
+                root = None
+                return temp
+            elif(root.r is None):
+                temp = root.l
+                root = None
+                return temp       
+            # Maximum value of  left subtree
+            # Inorder predecessor
+            # Can also be replaced by Inorder successor
+            max_value = root.l.findMax()
+            root.d = max_value
+            # Assign back the tree root after deleting
+            root.l = root.delete_node(root.l,max_value)
+
+        return root   
+                     
+            
+                       
+                  
+                   
+                        
         
        
 
