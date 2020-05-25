@@ -50,7 +50,7 @@ class Heap:
         
 
         # Swap elements at indexes and go down the tree if current and max_idx differ
-        # Call heapify again to check if operation is complete
+        # Call heapify again to check if operation is complete ( and indexes differ)
         if(max_idx != idx):
             self.heap[idx] ,self.heap[max_idx] = self.heap[max_idx],self.heap[idx]
             self.perlocate_down(max_idx)
