@@ -74,3 +74,20 @@ class Heap:
             # Return deleted element after completion
             return deleted_el
 
+    def insert_element(self,data):
+        # Increase size by 1
+        self.size += 1
+        # Pointer to the last index where
+        # element will be initially stored.
+        idx = self.size -1 
+        # self.heap[idx] = data doesn't need to be done since index of parent node will exist 
+        
+        # Swap starting from last index, going up parents 
+        while(idx >= 0 and self.parent_node(idx)!=-1 and data > self.heap[self.parent_node(idx)]):
+            # swap parent and curent node starting from bottom till at correct position
+            self.heap[idx],self.heap[self.parent_node(idx)] =  self.heap[self.parent_node(idx)],data
+            idx = self.parent_node(idx)
+        
+        # Base case to handle insertion of new element or insertion at bottom 
+        self.heap[idx] = data
+            
