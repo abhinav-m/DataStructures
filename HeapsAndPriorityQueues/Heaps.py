@@ -37,10 +37,11 @@ class Heap:
             return self.heap[0]
 
     # Element index to perlocate or heapify down
-    def perlocate_down(self, idx):
+    def percolate_down(self, idx):
         l_idx = self.left_child(idx)
         r_idx = self.right_child(idx)
-
+        
+        # Setting max index value to curent index.
         max_idx = idx
 
         if(l_idx != -1 and self.heap[l_idx]  > self.heap[max_idx]):
@@ -55,4 +56,21 @@ class Heap:
             self.heap[idx] ,self.heap[max_idx] = self.heap[max_idx],self.heap[idx]
             self.perlocate_down(max_idx)
 
-     
+    def delete_max(self):
+        # Heap is empty, return -1
+        if self.size == 0:
+            return -1
+        else:
+            # First element is deleted from the heap always. ( Both max and min heap case)
+            deleted_el = self.heap[0]
+            # Last( smallest leaf element assigned to heap)
+            last_el = self.heap[self.size-1]
+            # First element assigned to smallest element and percolated down.
+            self.heap[0] = last_el
+            # Since size is reduced, percolate_down will not consider the last element anymore
+            self.size = self.size -1
+            # Perlocate down the first index element back to it's place
+            self.percolate_down(0)
+            # Return deleted element after completion
+            return deleted_el
+

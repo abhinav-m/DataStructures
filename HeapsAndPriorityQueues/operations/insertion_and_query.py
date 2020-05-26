@@ -7,7 +7,7 @@ from Heaps import Heap
 
 def create_heap():
     heap_inst = Heap()
-
+    heap_list = [15,12,10,6,8,4,3,5,2]
     heap_inst.insert_node(3)
     heap_inst.insert_node(1)
     heap_inst.insert_node(5)
