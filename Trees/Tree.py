@@ -1,3 +1,5 @@
+from queue import Queue
+
 class Node:
     def __init__(self,d,l=None,r=None):
         self.d = d
@@ -45,6 +47,66 @@ class Node:
         }
         traversal_order.get(ORDER)(s);
 
+
+    @staticmethod
+    def level_order_traversal(root):
+        current_level = [root]
+       
+        while(len(current_level) > 0):
+            next_level = []
+            for i in range(0, len(current_level)):
+                current_node = current_level[i]
+                if(current_node):
+                    print(current_node.d)
+                    next_level.append(current_node.l)
+                    next_level.append(current_node.r)
+                
+            # Swap current and next level once current level has been traversed  
+            current_level  = next_level
+    
+
+    ## Better than above, because doesn't need to swap two lists O(n) space of queue at max
+    ## at last level, O(n) traverses each node once.
+    @staticmethod
+    def breadth_first_traversal(root):
+        if root is None:
+            return
+        q = Queue(maxsize=0)
+        q.put(root)
+        while(not q.empty()):
+            # Get the current level element and put the next
+            # in queue
+            cur_node = q.get();
+            print(cur_node.d)
+            # Put the next nodes on queue 
+            if(cur_node.l):
+                q.put(cur_node.l)
+            if(cur_node.r):
+                q.put(cur_node.r)
+
+
+        # Using a list as queue( correct if needed)
+                    
+    @staticmethod
+    def insert_tree_bfs(root,data):
+        new_node = Node(data)
+        if root is None:
+            root = new_node
+            return root
+          
+        q = Queue(maxsize=0)
+        q.put(root)
+        while(not q.empty()):
+            cur_node = q.get()
+            if(cur_node.l is None ):
+                cur_node.l = new_node
+                return root
+            elif(cur_node.r is None ):
+                cur_node.r = new_node
+                return root
+            # both exist add to queue
+            q.put(cur_node.l)
+            q.put(cur_node.r)
 
 
 
