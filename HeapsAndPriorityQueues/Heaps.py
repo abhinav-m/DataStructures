@@ -1,5 +1,5 @@
 class Heap:
-    def __init(self,max_size,heap_type="MAX_HEAP"):
+    def __init__(self,max_size,heap_type="MAX_HEAP"):
         self.max_size = max_size
         self.size = 0
         self.type = heap_type
@@ -54,7 +54,7 @@ class Heap:
         # Call heapify again to check if operation is complete ( and indexes differ)
         if(max_idx != idx):
             self.heap[idx] ,self.heap[max_idx] = self.heap[max_idx],self.heap[idx]
-            self.perlocate_down(max_idx)
+            self.percolate_down(max_idx)
 
     def delete_max(self):
         # Heap is empty, return -1
@@ -74,6 +74,15 @@ class Heap:
             # Return deleted element after completion
             return deleted_el
 
+    def properties(self):
+        print("******HEAP PROPERTIES*******")
+        print("HEAP ARRAY: ",self.heap)
+        print("CURRENT SIZE: ",self.size)
+        print("MAX SIZE: ",self.max_size);
+        print("TYPE: ",self.type);
+        print("******HEAP PROPERTIES*******")
+       
+       
     def insert_element(self,data):
         # Increase size by 1
         self.size += 1
