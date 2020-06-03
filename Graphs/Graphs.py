@@ -18,5 +18,5 @@ class GraphNode:
         self._graph[vertex1].append(vertex2)
         if not self._directed:
             # Add vertex 1 back to vertex 2 if graph is not 
-            # directed.
+            # directed ( connect both of them to each other)
             self._graph[vertex2].append(vertex1)
