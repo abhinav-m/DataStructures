@@ -9,8 +9,8 @@ class GraphNode:
         self.add_connections(connections)
         
     def add_connections(self,connections):
-        
-        for vertex1,vertex2 in connections:
+        # Assuming connections of tuples 
+        for [vertex1,vertex2] in connections:
             self.add(vertex1,vertex2)
     
     def add(self,vertex1,vertex2):
@@ -20,3 +20,13 @@ class GraphNode:
             # Add vertex 1 back to vertex 2 if graph is not 
             # directed ( connect both of them to each other)
             self._graph[vertex2].append(vertex1)
+
+    def print_graph(self):
+        print("***** GRAPH NODES *****")
+        graph = self._graph
+        for key in graph:
+            cur_vertices = graph[key]
+            for v in cur_vertices:
+                print(key,"->",v)
+
+        print("***** GRAPH NODES *****")
