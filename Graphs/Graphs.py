@@ -1,4 +1,5 @@
 from collections import defaultdict
+from queue import Queue
 
 class GraphNode:
     # Assuming that connections are in the form of arrays
@@ -39,6 +40,19 @@ class GraphNode:
         # Set ensures each vertex is visted only once.
         visited = set()
         self._dfs_util(vertex,visited)
+
+    def _bfs_util(self,vertex,visited):
+        cur_neighbours = self._graph[vertex]
+        for v in cur_neighbours:
+            if(v not in visited):
+                print(v)
+                visited.add(v)
+                cur_ne
+
+    def bfs(self, vertex='A'):
+        visited = set()
+        self._bfs_util(vertex,visited)
+        
 
 
 
