@@ -27,18 +27,18 @@ class GraphNode:
             print(vertex)
             visited.add(vertex)
             # Traversing all connected nodes of current graph
-            for neighbour in self._graph[vertex]
-                _dfs_util(self,neighbour,visited)
+            for neighbour in self._graph[vertex]:
+                self._dfs_util(neighbour,visited)
 
         
 
 
-
-    def dfs(self,vertex):
-        # All vertices = dictionary size
-        num_vertex = len(self._graph)
-        # Initially, mark visited as false
+    # Driver function for dfs
+    def dfs(self,vertex='A'):
+        # Initially, visited is an empty set 
+        # Set ensures each vertex is visted only once.
         visited = set()
+        self._dfs_util(vertex,visited)
 
 
 

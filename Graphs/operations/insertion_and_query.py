@@ -9,10 +9,12 @@ def create_graph():
     connections = [['A','B'],['B','H'],['B','C'],['H','E'],['C','E'],['C','D'],['E','F'],['E','G']]
     return GraphNode(connections,True)
 
-def traverse_graph()
-    
+def traverse_graph(g):
+    g.dfs()
+
 
 
 graph = create_graph()
 
-graph.print_graph()
+# graph.print_graph()
+traverse_graph(graph)
