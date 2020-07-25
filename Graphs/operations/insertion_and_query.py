@@ -9,7 +9,8 @@ def create_graph():
     connections = [['A','B'],['B','H'],['B','C'],['H','E'],['C','E'],['C','D'],['E','F'],['E','G']]
     return GraphNode(connections,True)
 
-
+def traverse_graph()
+    
 
 
 graph = create_graph()
