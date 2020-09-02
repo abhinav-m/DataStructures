@@ -1,6 +1,6 @@
 
 import sys
-sys.path.insert(1, "/home/abhinav/Work/dsa/DataStructures/Graphs")
+sys.path.insert(1, "/home/abhinav/Work/practice/DataStructures/Graphs")
 # from Tree import Node
 from Graphs import GraphNode
 
@@ -10,7 +10,8 @@ def create_graph():
     return GraphNode(connections,True)
 
 def traverse_graph(g):
-    g.dfs()
+    # g.dfs()
+    g.bfs()
 
 
 

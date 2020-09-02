@@ -41,17 +41,22 @@ class GraphNode:
         visited = set()
         self._dfs_util(vertex,visited)
 
-    def _bfs_util(self,vertex,visited):
+    def _bfs_util(self,vertex,visited,cur_queue):
         cur_neighbours = self._graph[vertex]
         for v in cur_neighbours:
             if(v not in visited):
                 print(v)
                 visited.add(v)
-                cur_ne
+                cur_queue.put(v)
+        if(not cur_queue.empty()):
+            cur_vertex = cur_queue.get()
+            self._bfs_util(cur_vertex,visited,cur_queue)
 
     def bfs(self, vertex='A'):
         visited = set()
-        self._bfs_util(vertex,visited)
+        cur_queue = Queue()
+        self._bfs_util(vertex,visited,cur_queue)
+        print("**GRAPH TRAVERSED**")
         
 
 
