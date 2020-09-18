@@ -59,6 +59,20 @@ class GraphNode:
         print("**GRAPH TRAVERSED**")
         
 
+    def bfs_iter(self,vertex):
+        visited = set()
+        q = Queue()
+        q.put(vertex)
+        
+        while (not q.empty()):
+            cur_vertex = q.get()
+            cur_neighbours = self._graph[cur_vertex]
+            if(cur_vertex not in visited):
+                print(cur_vertex)
+                visited.add(cur_vertex)
+            for n in cur_neighbours:
+                q.put(n)
+        print("**GRAPH TRAVERSED**")
 
 
     def print_graph(self):

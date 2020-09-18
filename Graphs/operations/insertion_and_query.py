@@ -11,7 +11,7 @@ def create_graph():
 
 def traverse_graph(g):
     # g.dfs()
-    g.bfs()
+    g.bfs_iter('A')
 
 
 
