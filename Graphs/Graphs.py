@@ -24,11 +24,13 @@ class GraphNode:
             self._graph[vertex2].append(vertex1)
 
     def _dfs_util(self,vertex,visited):
-        if vertex not in visited:
-            print(vertex)
-            visited.add(vertex)
-            # Traversing all connected nodes of current graph
-            for neighbour in self._graph[vertex]:
+        visited.add(vertex)
+        print(vertex)
+        
+           
+        # Traversing all connected nodes of current graph
+        for neighbour in self._graph[vertex]:
+            if neighbour not in visited:
                 self._dfs_util(neighbour,visited)
 
         
