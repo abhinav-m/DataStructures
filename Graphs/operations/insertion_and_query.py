@@ -1,6 +1,6 @@
 
 import sys
-sys.path.insert(1, "/home/abhinav/Work/practice/DataStructures/Graphs")
+sys.path.insert(1, "/home/abhinav/Work/dsa/DataStructures/Graphs")
 # from Tree import Node
 from Graphs import GraphNode
 

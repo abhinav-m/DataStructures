@@ -58,22 +58,28 @@ class GraphNode:
         self._bfs_util(vertex,visited,cur_queue)
         print("**GRAPH TRAVERSED**")
         
-    # Can be optimized
+  
     def bfs_iter(self,vertex):
-        visited = set()
-        q = Queue()
-        q.put(vertex)
-        
-        while (not q.empty()):
-            cur_vertex = q.get()
-            if(cur_vertex not in visited):
+        if vertex:
+            q = Queue()
+            visited = set()
+            q.put(vertex)
+            visited.add(vertex)
+            
+            while (not q.empty()):
+                # Popping one element off the queue
+                cur_vertex = q.get()
                 print(cur_vertex)
-                visited.add(cur_vertex)
+                # Getting its neighbours / current level
                 cur_neighbours = self._graph[cur_vertex]
                 for n in cur_neighbours:
+                # Adding current level neighbours to queue, if not visited
                     if(n not in visited):
                         q.put(n)
-        print("**GRAPH TRAVERSED**")
+            print("**GRAPH TRAVERSED**")
+        else:
+            print("**GRAPH EMPTY**")
+       
 
 
     def print_graph(self):
