@@ -78,6 +78,7 @@ class GraphNode:
                 # Adding current level neighbours to queue, if not visited
                     if(n not in visited):
                         q.put(n)
+                        visited.add(n)
             print("**GRAPH TRAVERSED**")
         else:
             print("**GRAPH EMPTY**")

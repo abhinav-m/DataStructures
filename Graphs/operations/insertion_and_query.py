@@ -10,8 +10,8 @@ def create_graph():
     return GraphNode(connections,True)
 
 def traverse_graph(g):
-    g.dfs()
-    # g.bfs_iter('A')
+    # g.dfs()
+    g.bfs_iter('A')
 
 
 
