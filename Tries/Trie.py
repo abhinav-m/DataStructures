@@ -29,6 +29,10 @@ class Trie:
                 current.children[ch_idx] = TrieNode()
             # Traverse to next key
             current = current.children[ch_idx]
+        
+        # Mark last node traversed as true
+        # to mark as word end
+        current.is_end_of_word = True
             
     def search(self,word):
         current = self.root
@@ -59,11 +63,15 @@ def main():
     for word in words:
         t.insert(word)
   
-    # Search for different keys
+    # Search for different words
+    # True translates to 1 
+    # False translates to 0 in array
     print("{} ---- {}".format("the",output[t.search("the")]))
     print("{} ---- {}".format("these",output[t.search("these")]))
     print("{} ---- {}".format("their",output[t.search("their")]))
     print("{} ---- {}".format("thaw",output[t.search("thaw")]))
+    print("{} ---- {}".format("anasw",output[t.search("anasw")]))
+    print("{} ---- {}".format("anaswe",output[t.search("anaswe")]))
   
 if __name__ == '__main__':
     main()
