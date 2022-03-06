@@ -117,24 +117,31 @@ print("WEIGHTS AFTER ADDING ALL VALUES",uf.weights)
 print("PARENTS AFTER ADDING ALL VALUES",uf.parents)
 
 # Union 3 and 4
-uf.union(3,4)
-
-# See current data structure after unions
-print("WEIGHTS AFTER UNION 3,4",uf.weights)
-print("PARENTS AFTER UNION 3,4",uf.parents)
-
-
-uf.union(3,2)
-
-# See current data structure after unions
-print("WEIGHTS AFTER UNION 3,2",uf.weights)
-print("PARENTS AFTER UNION 3,2",uf.parents)
-
 uf.union(3,1)
 
 # See current data structure after unions
 print("WEIGHTS AFTER UNION 3,1",uf.weights)
 print("PARENTS AFTER UNION 3,1",uf.parents)
+
+
+# uf.union(3,2)
+
+# # See current data structure after unions
+# print("WEIGHTS AFTER UNION 3,2",uf.weights)
+# print("PARENTS AFTER UNION 3,2",uf.parents)
+
+uf.union(4,2)
+
+# See current data structure after unions
+print("WEIGHTS AFTER UNION 4 2",uf.weights)
+print("PARENTS AFTER UNION 4,2",uf.parents)
+
+
+uf.union(2,1)
+
+# See current data structure after unions
+print("WEIGHTS AFTER UNION 2,1",uf.weights)
+print("PARENTS AFTER UNION 2,1",uf.parents)
 
 # This will path compress
 # After finding root of 4->3->2->1
@@ -142,7 +149,17 @@ print("PARENTS AFTER UNION 3,1",uf.parents)
 uf.FIND(4)
 
 # See current data structure after find operation
-# Collapsing their roots as find
-print("WEIGHTS AFTER FIND 4",uf.weights)
-print("PARENTS AFTER FIND 4",uf.parents)
+# (NON COLLAPSED FIND)
+print("WEIGHTS AFTER FIND 4 (NON COLLAPSED)",uf.weights)
+print("PARENTS AFTER FIND 4 (NON COLLAPSED)",uf.parents)
 
+
+# This will path compress
+# After finding root of 1->3->4
+# Collapsing find 
+uf.FIND(1)
+
+# See current data structure after find operation
+# Collapsing their roots as find
+print("WEIGHTS AFTER FIND 1 (COLLAPSING TO 4) ",uf.weights)
+print("PARENTS AFTER FIND 1 (COLLAPSING TO 4)",uf.parents)
