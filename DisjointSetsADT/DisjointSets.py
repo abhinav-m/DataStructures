@@ -26,7 +26,7 @@ class UnionFind:
         self.parents = {}
 
     
-    def __getitem(self,item):
+    def FIND(self,item):
 
         # Doesn't exist in the set
         if item not in self.parents:
@@ -94,3 +94,55 @@ class UnionFind:
                 self.weights[heaviest] += self.weights[r]
                 # Make parent of root to heaviest
                 self.parents[r] = heaviest
+
+
+uf = UnionFind()
+
+
+# Adds one to set ADT and returns the same
+uf.FIND(1)
+
+# Adds two to set ADT and returns the same
+uf.FIND(2)
+
+# Gets value 1 and returns
+uf.FIND(1)
+
+
+# Add 3 and 4 to ADT
+uf.FIND(3)
+uf.FIND(4)
+
+print("WEIGHTS AFTER ADDING ALL VALUES",uf.weights)
+print("PARENTS AFTER ADDING ALL VALUES",uf.parents)
+
+# Union 3 and 4
+uf.union(3,4)
+
+# See current data structure after unions
+print("WEIGHTS AFTER UNION 3,4",uf.weights)
+print("PARENTS AFTER UNION 3,4",uf.parents)
+
+
+uf.union(3,2)
+
+# See current data structure after unions
+print("WEIGHTS AFTER UNION 3,2",uf.weights)
+print("PARENTS AFTER UNION 3,2",uf.parents)
+
+uf.union(3,1)
+
+# See current data structure after unions
+print("WEIGHTS AFTER UNION 3,1",uf.weights)
+print("PARENTS AFTER UNION 3,1",uf.parents)
+
+# This will path compress
+# After finding root of 4->3->2->1
+# Collapsing find ?
+uf.FIND(4)
+
+# See current data structure after find operation
+# Collapsing their roots as find
+print("WEIGHTS AFTER FIND 4",uf.weights)
+print("PARENTS AFTER FIND 4",uf.parents)
+
