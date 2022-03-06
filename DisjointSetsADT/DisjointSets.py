@@ -6,6 +6,16 @@ Union find implementation based on weight of sets
 following python standards
 '''
 
+'''
+NOTES:
+1. Path compression is only possible while using weights / size as heights resizing of tree can be costly
+2. Time complexity is logN for UNION -> m operations mlogn 
+
+Todo:
+1. Understand time complexity
+
+'''
+
 class UnionFind:
     """Union Find data structure.
 
