@@ -1,5 +1,5 @@
 '''
-Basic hashtable implementation
+Basic hashtable implementation - LC question
 '''
 class MyHashMap:
 
