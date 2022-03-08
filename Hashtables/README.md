@@ -12,4 +12,6 @@ Hashtable example implementation
 Hashtable python implementation (with arraylist (instead of LL) sort of data structure) and some things to correct
 3. https://stackoverflow.com/questions/63311815/how-to-measure-the-max-load-factor-of-a-hash-table-python
 
-4. https://en.wikipedia.org/wiki/Hash_table Great explanations of open addressind and separate chaining
+4. https://en.wikipedia.org/wiki/Hash_table Great explanations of open addressing and separate chaining
+
+5. Hashtable implementation discussions
