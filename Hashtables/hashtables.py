@@ -131,9 +131,14 @@ class HashTable:
                 self.size += 1
         
         
-
+        # Loadfactor = self.size / self.capacity
+        # Thus can be rewritten this way
         if self.size >= self.load_factor * self.capacity:
             self.__rehash()
+        
+        ## OR:
+        # if self.size / self.capacity >= self.load_factor:
+            # self.__rehash()
         
         return True
 
