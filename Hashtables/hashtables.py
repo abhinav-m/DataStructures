@@ -1,6 +1,6 @@
 '''
 Hashtable implementation with
-load factor, rehashing and open addressing
+load factor, rehashing and separate chaining (Arraylist)
 
 Hashing is an example of space-time tradeoff. 
 If there exists a condition where the memory is infinite, 
