@@ -15,3 +15,5 @@ Hashtable python implementation (with arraylist (instead of LL) sort of data str
 4. https://en.wikipedia.org/wiki/Hash_table Great explanations of open addressing and separate chaining
 
 5. Hashtable implementation discussions
+
+6. Partial implementation HW https://w3.cs.jmu.edu/spragunr/CS240_F12/activities/hashmap/hashmap.py
